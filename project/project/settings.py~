@@ -11,15 +11,23 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+<<<<<<< HEAD
 from project.secrets import SECRET_KEY 
+=======
+>>>>>>> 0fc73d21248c0b10bf9b7957f4a9e021e0c53355
 
-
+from project import secrets as s 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
+
+<<<<<<< HEAD
+=======
+SECRET_KEY = s.SECRET_KEY
+>>>>>>> 0fc73d21248c0b10bf9b7957f4a9e021e0c53355
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,10 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'crispy_forms',
     'users',
+=======
     'securities',
     'analysis',
+>>>>>>> 0fc73d21248c0b10bf9b7957f4a9e021e0c53355
 ]
 
 MIDDLEWARE_CLASSES = [
