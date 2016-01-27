@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'securities',
     'analysis',
+    'portfolio',
 ]
 
 MIDDLEWARE_CLASSES = [
