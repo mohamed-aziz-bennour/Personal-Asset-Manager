@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from users import urls as users_urls
+from analysis import urls as analysis_urls
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^$|^users/$', index, name="landing-page"),
     url(r'^users/', include(users_urls, namespace="users")),
+    url(r'^analysis/', include(analysis_urls, namespace='analysis')),
 ]
