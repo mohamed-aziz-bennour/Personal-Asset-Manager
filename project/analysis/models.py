@@ -132,11 +132,11 @@ class Risk(models.Model):
 		(3, '15-20% by accepting a sufficient amount of risk.'),
 		(4, 'More than 20% by investing in an investment portfolio more risky than the market.')
 	)
-	cash_reserves = models.IntegerField(max_length=1, choices=CASH_RESERVES)
-	time_horizont = models.IntegerField(max_length=1, choices=TIME_HORIZONT)
-	market_loss = models.IntegerField(max_length=1, choices=MARKET_LOSS)
-	investment_experience = models.IntegerField(max_length=1, choices=INVESTMENT_EXPERIENCE)
-	investment_return = models.IntegerField(max_length=1, choices=INVESTMENT_RETURN)
+	cash_reserves = models.IntegerField(choices=CASH_RESERVES)
+	time_horizont = models.IntegerField(choices=TIME_HORIZONT)
+	market_loss = models.IntegerField(choices=MARKET_LOSS)
+	investment_experience = models.IntegerField(choices=INVESTMENT_EXPERIENCE)
+	investment_return = models.IntegerField(choices=INVESTMENT_RETURN)
 
 
 class Investment_policy(models.Model):
