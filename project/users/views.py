@@ -12,6 +12,7 @@ from django.contrib.auth.forms import (
 # from .forms import UserUpdateForm
 from .forms import ProfileForm, UserForm
 from users.models import Profile
+from django.contrib.auth import update_session_auth_hash
 # from . import helper as help_ 
 # Create your views here.
 # Rolling Your Own User Views
@@ -195,11 +196,13 @@ class ChangePassword(LoginRequiredMixin, View):
     context = None
 
     def get(self, request):
+        print('***************inside the get')
         form = self.form_class(user=request.user)
         self.context = self.get_context(form)
         return self.render_to_response(request)
 
     def post(self, request):
+        print('***************inside the post')
         form = self.form_class(
             user=request.user, data=request.POST
         )
@@ -217,7 +220,7 @@ class ChangePassword(LoginRequiredMixin, View):
     def get_context(self, form):
         return {
             "form": form,
-            "action": "users:update",
+            "action": "users:passwordChange",
             "method": "POST",
             "submit_text": "Update" 
         }
