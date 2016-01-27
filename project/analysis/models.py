@@ -106,7 +106,7 @@ class Risk(models.Model):
 		(1, 'Less than two months.'),
 		(2, 'Two to three months.'),
 		(3, 'Three to five months.'),
-		(4, 'Six months or more.')
+		(4, 'Six months or more.'),
 	)
 	TIME_HORIZONT = (
 		(1, 'Five years or less.'),
@@ -124,13 +124,13 @@ class Risk(models.Model):
 		(1, 'None.'),
 		(2, 'I have little background in purchasing stocks, some mutual funds.'),
 		(3, 'I am comfortable with purchasing mutual funds, bonds, and stocks.'),
-		(4, 'I have extensive investment experience with mutual funds, bonds, stocks, and derivatives.')
+		(4, 'I have extensive investment experience with mutual funds, bonds, stocks, and derivatives.'),
 	)
 	INVESTMENT_RETURN = (
 		(1, 'Less than half of the market, however preserving capital is my primary goal.'),
 		(2, 'Half of the market but protecting against potential losses by a riskier portfolio is not preferred.'),
 		(3, '15-20% by accepting a sufficient amount of risk.'),
-		(4, 'More than 20% by investing in an investment portfolio more risky than the market.')
+		(4, 'More than 20% by investing in an investment portfolio more risky than the market.'),
 	)
 	cash_reserves = models.IntegerField(choices=CASH_RESERVES)
 	time_horizont = models.IntegerField(choices=TIME_HORIZONT)
@@ -158,7 +158,7 @@ class Investment_policy(models.Model):
 		('Taking time off work', 'Taking time off work'),
 		('Create additional Income streams', 'Create additional Income streams'),
 		('Charitable giving', 'Charitable giving'),
-		('Preparing for a life milestone', 'Preparing for a life milestone')
+		('Preparing for a life milestone', 'Preparing for a life milestone'),
 	)
 	GOAL_MID = (
 		('Growth of Capital', 'Growth of Capital'),
@@ -203,7 +203,7 @@ class Investment_policy(models.Model):
 		('25+ years', '25+ years'),
 		('15+ years', '15+ years'),
 		('10+ years', '10+ years'),
-		('5+ years', '5+ years')
+		('5+ years', '5+ years'),
 	)
 	time_retirement = models.CharField(max_length=20, choices=TIME_RETIREMENT)
 	liquidity_needs = models.CharField(max_length=50, choices=LIQIDITY_NEEDS)
