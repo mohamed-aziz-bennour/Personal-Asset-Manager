@@ -10,7 +10,7 @@ from django.contrib.auth.forms import (
     UserCreationForm, AuthenticationForm, PasswordChangeForm
 )
 # from .forms import UserUpdateForm
-from .forms import ProfileForm, UserForm
+from .forms import ProfileForm, UserForm, ChangePhoneForm
 from users.models import Profile
 from django.contrib.auth import update_session_auth_hash
 # from . import helper as help_ 
@@ -227,3 +227,45 @@ class ChangePassword(LoginRequiredMixin, View):
         
     def render_to_response(self, request):
         return render(request, self.template_name, self.context)
+
+class ChangePhone(LoginRequiredMixin, View):
+    template_name = "users/user_form.html"
+    form_class = ChangePhoneForm
+    success_url = "users:welcome"
+    context = None
+
+    def get(self, request):
+        print('***************inside the get to change number')
+        profile = Profile.objects.get(user=request.user)
+        request.profile = profile
+        form = self.form_class(instance=profile)
+        self.context = self.get_context(form)
+        return self.render_to_response(request)
+
+    def post(self, request):
+        print('***************inside the post to change number')
+        # form = self.form_class(
+        #     user=request.user, data=request.POST
+        # )
+        profile = Profile.objects.get(user=request.user)
+        form = self.form_class(request.POST,instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect(self.success_url)
+        else:
+            print('form is not valid')
+            self.context = self.get_context(form)
+            return self.render_to_response(request)
+
+    def get_context(self, form):
+        return {
+            "form": form,
+            "action": "users:ChangePhone",
+            "method": "POST",
+            "submit_text": "change" 
+        }
+        
+    def render_to_response(self, request):
+        return render(request, self.template_name, self.context)
+
+
