@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from . import views
 urlpatterns = [
-	url(r'^anlysis$', views.ClientCreateView.as_view(), name="create"),
+	url(r'^analysis$', views.ClientCreateView.as_view(), name="analysis"),
 	]
 
 
