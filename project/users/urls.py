@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^passwordChange$', views.ChangePassword.as_view(), name="passwordChange"),
     url(r'^welcome$', views.Welcome.as_view(), name="welcome"),
     url(r'^logout$', views.UserLogout.as_view(), name="logout"),
+    url(r'^ChangePhone$', views.ChangePhone.as_view(), name="ChangePhone"),
 ]

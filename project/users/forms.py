@@ -55,3 +55,9 @@ class UserForm(forms.ModelForm):
             'username','email',
             'first_name', 'last_name'
             ]
+class ChangePhoneForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            'phone_number',
+            ]
