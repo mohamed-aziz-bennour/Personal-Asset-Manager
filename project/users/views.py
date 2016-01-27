@@ -10,7 +10,7 @@ from django.contrib.auth.forms import (
     UserCreationForm, AuthenticationForm, PasswordChangeForm
 )
 # from .forms import UserUpdateForm
-from .forms import ProfileForm
+from .forms import ProfileForm, UserForm
 from users.models import Profile
 # from . import helper as help_ 
 # Create your views here.
@@ -44,7 +44,7 @@ class UserLogout(LoginRequiredMixin, View):
 
     def get(self,request):
         logout(request)
-        request.session['dict_profile'] = None
+        # request.session['dict_profile'] = None
         return redirect(settings.LOGIN_URL)
         
     def post(self,request):
@@ -72,7 +72,7 @@ class CreateUser(View):
             user = User.objects.create_user(
                 username=data.get('username'),
                 password=data.get('password'),
-                email=data.get('username'),
+                email=data.get('email'),
                 first_name=data.get('first_name'),
                 last_name=data.get('last_name'),
                 )
@@ -112,9 +112,9 @@ class LoginUser(View):
         data=request.POST
         if True:
         # if form.is_valid():
-            print ("11111111111111111111")
+            
             # user = form.get_user()
-            print(data.get('username'),data.get('password'))
+            
             user = User.objects.filter(username=data.get('username'))
             
             username = request.POST['username']
@@ -125,12 +125,13 @@ class LoginUser(View):
             else:
                 self.context = self.get_context(form)
                 return self.render_to_response(request)
-            print('33333333333333333333')
+           
             profile = Profile.objects.filter(user=user)
             if "next" in request.session:
                 self.success_url = request.session["next"]
                 del request.session["next"]
             request.session.set_expiry(300)
+            print(dir(request))
             # dict_profile = {'username': data.get('username'),
             #     'first_name':data.get('first_name'),
             #     'last_name' : data.get('last_name'),
@@ -156,7 +157,7 @@ class LoginUser(View):
 
 class UpdateUser(LoginRequiredMixin, View):
     template_name = "users/user_form.html"
-    form_class = ProfileForm
+    form_class = UserForm
     success_url = "users:welcome"
     context = None
 
@@ -187,36 +188,39 @@ class UpdateUser(LoginRequiredMixin, View):
     def render_to_response(self, request):
         return render(request, self.template_name, self.context)
 
-# class ChangePassword(LoginRequiredMixin, View):
-#     template_name = "users/user_form.html"
-#     form_class = PasswordChangeForm
-#     success_url = "users:welcome"
-#     context = None
+class ChangePassword(LoginRequiredMixin, View):
+    template_name = "users/user_form.html"
+    form_class = PasswordChangeForm
+    success_url = "users:welcome"
+    context = None
 
-#     def get(self, request):
-#         form = self.form_class()
-#         self.context = self.get_context(form)
-#         return self.render_to_response(request)
+    def get(self, request):
+        form = self.form_class(user=request.user)
+        self.context = self.get_context(form)
+        return self.render_to_response(request)
 
-#     def post(self, request):
-#         form = self.form_class(
-#             user=request.users, data=request.POST
-#         )
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user)
-#             return redirect(self.success_url)
-#         else:
-#             self.context = self.get_context(form)
-#             return self.render_to_response(request)
+    def post(self, request):
+        form = self.form_class(
+            user=request.user, data=request.POST
+        )
+        print(request.user)
+        print(request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect(self.success_url)
+        else:
+            print('form is not is_valid')
+            self.context = self.get_context(form)
+            return self.render_to_response(request)
 
-#     def get_context(self, form):
-#         return {
-#             "form": form,
-#             "action": "users:update",
-#             "method": "POST",
-#             "submit_text": "Update" 
-#         }
+    def get_context(self, form):
+        return {
+            "form": form,
+            "action": "users:update",
+            "method": "POST",
+            "submit_text": "Update" 
+        }
         
-#     def render_to_response(self, request):
-#         return render(request, self.template_name, self.context)
+    def render_to_response(self, request):
+        return render(request, self.template_name, self.context)

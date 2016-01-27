@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^create$', views.CreateUser.as_view(), name="create"),
     url(r'^login$',  views.LoginUser.as_view(), name="login"),
     url(r'^update$', views.UpdateUser.as_view(), name="update"),
-    # url(r'^passord_change$', views.ChangePassword.as_view(), name="password_change"),
+    url(r'^passwordChange$', views.ChangePassword.as_view(), name="passwordChange"),
     url(r'^welcome$', views.Welcome.as_view(), name="welcome"),
     url(r'^logout$', views.UserLogout.as_view(), name="logout"),
 ]
