@@ -7,7 +7,7 @@ class Stock(models.Model):
 	company_name = models.CharField(max_length = 255)
 	sector = models.CharField(max_length = 30)
 	industry = models.CharField(max_length = 30)
-	market_capitalization = models.DecimalField(max_digits = 10)
+	market_capitalization = models.DecimalField(max_digits = 10, decimal_places = 2)
 
 
 class Bond(models.Model):
