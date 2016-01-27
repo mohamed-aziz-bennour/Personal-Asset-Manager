@@ -1,5 +1,5 @@
 from django import forms
-from securities.models import Stock, Bond, Etf
+from securities.securities_models import Stock, Bond, Etf
 
 class StockForm(forms.ModelForm):
 	class Meta:
@@ -16,4 +16,4 @@ class Etf(models.ModelForm):
 	class Meta:
 		model = Etf
 		fields = ['symbol', 'name', 'category', 'fund_family', 'bata', 'alpha', 'r_squared', 'sharpe_ratio']
-		 
+
