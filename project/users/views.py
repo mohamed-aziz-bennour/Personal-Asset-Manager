@@ -154,38 +154,38 @@ class LoginUser(View):
     def render_to_response(self, request):
         return render(request, self.template_name, self.context)
 
-# class UpdateUser(LoginRequiredMixin, View):
-#     template_name = "users/user_form.html"
-#     form_class = UserUpdateForm
-#     success_url = "users:welcome"
-#     context = None
+class UpdateUser(LoginRequiredMixin, View):
+    template_name = "users/user_form.html"
+    form_class = ProfileForm
+    success_url = "users:welcome"
+    context = None
 
-#     def get(self, request):
-#         form = self.form_class(instance=request.user)
-#         self.context = self.get_context(form)
-#         return self.render_to_response(request)
+    def get(self, request):
+        form = self.form_class(instance=request.user)
+        self.context = self.get_context(form)
+        return self.render_to_response(request)
 
-#     def post(self, request):
-#         form = self.form_class(
-#             data=request.POST, instance=request.user
-#         )
-#         if form.is_valid():
-#             form.save()
-#             return redirect(self.success_url)
-#         else:
-#             self.context = self.get_context(form)
-#             return self.render_to_response(request)
+    def post(self, request):
+        form = self.form_class(
+            data=request.POST, instance=request.user
+        )
+        if form.is_valid():
+            form.save()
+            return redirect(self.success_url)
+        else:
+            self.context = self.get_context(form)
+            return self.render_to_response(request)
 
-#     def get_context(self, form):
-#         return {
-#             "form": form,
-#             "action": "users:update",
-#             "method": "POST",
-#             "submit_text": "Update" 
-#         }
+    def get_context(self, form):
+        return {
+            "form": form,
+            "action": "users:update",
+            "method": "POST",
+            "submit_text": "Update" 
+        }
         
-#     def render_to_response(self, request):
-#         return render(request, self.template_name, self.context)
+    def render_to_response(self, request):
+        return render(request, self.template_name, self.context)
 
 # class ChangePassword(LoginRequiredMixin, View):
 #     template_name = "users/user_form.html"

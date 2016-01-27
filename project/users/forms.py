@@ -7,7 +7,9 @@ class ProfileForm(forms.ModelForm):
     
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
-    password = forms.CharField(max_length=30, widget=forms.PasswordInput())
+    password = forms.CharField(max_length=30, 
+        widget=forms.PasswordInput()
+        )
     username = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
     email = forms.CharField(max_length=30)
@@ -30,7 +32,7 @@ class ProfileForm(forms.ModelForm):
         #     ]
 
     def save(self, *args, **kwargs):
-        super(ProfileForm, self).save(*args, **kw)
+        super(ProfileForm, self).save(*args, **kwargs)
         self.instance.user.first_name = self.cleaned_data.get('first_name')
         self.instance.user.last_name = self.cleaned_data.get('last_name')
         self.instance.user.username = self.cleaned_data.get('username')
