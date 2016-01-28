@@ -1,8 +1,9 @@
-
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head><title>Portfolios</title></head>
 <body>
+
     <h1>list Portfolios</h1>
     
  
@@ -14,5 +15,11 @@
 
         {% endfor %}
     {% endif %}
+
+    <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+        <script src="{% static 'portfolio/portfolio.js' %}" type="application/javascript"></script>
+        {% include 'portfolio/name_update.html' %}
 </body>
 </html>
