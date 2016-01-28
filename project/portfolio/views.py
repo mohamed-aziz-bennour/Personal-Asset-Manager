@@ -47,4 +47,19 @@ class CreatePortfolio(LoginRequiredMixin,View):
     def render_to_response(self, request):
         return render(request, self.template_name, self.context)
 
+class ShowPortfolio(LoginRequiredMixin,View):
+    
+    def get(self,request):
+        portfolio_objects = Portfolio.objects.filter(user=request.user)
+        # portfolios = [portfolio.to_json() for portfolio in portfolio_objects]
+        portfolios = [portfolio for portfolio in portfolio_objects]
+        # if portfolios.exists():
+        return render(request, 'portfolio/list_portfolio.html',
+         {'portfolios':portfolios}
+         )
+
+    def post(self,request):
+        return HttpResponseNotAllowed(['GET'])
+
+
 
