@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html>
+<head><title>Portfolios</title></head>
+<body>
+    <h1>list Portfolios</h1>
+    
+ 
+    {% if portfolios %}
+        {% for portfolio in portfolios %}
+            <li>{{ portfolio.portfolio_name}}</li>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
