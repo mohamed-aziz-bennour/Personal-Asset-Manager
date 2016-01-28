@@ -8,7 +8,10 @@
  
     {% if portfolios %}
         {% for portfolio in portfolios %}
-            <li>{{ portfolio.portfolio_name}}</li>
+            <li><a href="">{{ portfolio.portfolio_name}}</a>
+                <a  href="/portfolio/delete/{{portfolio.id}}">Delete</a>
+            </li>
+
         {% endfor %}
     {% endif %}
 </body>

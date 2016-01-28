@@ -62,4 +62,18 @@ class ShowPortfolio(LoginRequiredMixin,View):
         return HttpResponseNotAllowed(['GET'])
 
 
+class DeletePortfolio(LoginRequiredMixin,View):
+    success_url="portfolio:show_list"
+    
+    def get(self,request,id):
+        print(id)
+        portfolio_objects = Portfolio.objects.get(id=id,
+            user=request.user).delete()
+        return redirect(self.success_url)
+       
+
+    def post(self,request):
+        return HttpResponseNotAllowed(['GET'])
+
+
 
