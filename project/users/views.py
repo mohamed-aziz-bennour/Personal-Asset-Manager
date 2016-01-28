@@ -55,7 +55,7 @@ class UserLogout(LoginRequiredMixin, View):
 
 # The Following Views All Have An Associated Form
 class CreateUser(View):
-    template_name = "users/user_form.html"
+    template_name = "users/registration.html"
     form_class = ProfileForm
     success_url = "users:login"
     context = None
