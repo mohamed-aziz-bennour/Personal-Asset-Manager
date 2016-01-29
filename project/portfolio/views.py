@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from portfolio.forms import PortfolioForm
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -50,10 +51,13 @@ class CreatePortfolio(LoginRequiredMixin,View):
 class ShowPortfolio(LoginRequiredMixin,View):
     
     def get(self,request):
-        portfolio_objects = Portfolio.objects.filter(user=request.user)
-        # portfolios = [portfolio.to_json() for portfolio in portfolio_objects]
-        portfolios = [portfolio for portfolio in portfolio_objects]
-        # if portfolios.exists():
+        portfolios = Portfolio.objects.filter(user=request.user)
+        print(dir(request))
+        if request.is_ajax():
+            portfolios = [portfolio.to_json() for portfolio in portfolios]
+            return JsonResponse({'portfolios':portfolios})
+
+
         return render(request, 'portfolio/list_portfolio.html',
          {'portfolios':portfolios}
          )
@@ -66,14 +70,31 @@ class DeletePortfolio(LoginRequiredMixin,View):
     success_url="portfolio:show_list"
     
     def get(self,request,id):
-        print(id)
-        portfolio_objects = Portfolio.objects.get(id=id,
+        portfolio_object = Portfolio.objects.get(id=id,
             user=request.user).delete()
         return redirect(self.success_url)
        
 
     def post(self,request):
         return HttpResponseNotAllowed(['GET'])
+
+
+class UpdatePortfolio(View):
+    def get(self,request,id):
+        portfolio_object = Portfolio.objects.get(id=id)
+        return JsonResponse({'portfolio':portfolio_object.to_json()})
+
+    def post(self,request, id):
+        data = request.POST
+        print(data)
+        if not data.get('portfolio_name'):
+            return JsonResponse({'status':'failure', 'message':'invalid portfolio name'})
+        portfolio_name = data.get('portfolio_name')
+        portfolio_object = Portfolio.objects.get(id=id,
+            user=request.user)
+        portfolio_object.portfolio_name = portfolio_name
+        portfolio_object.save()
+        return JsonResponse({'portfolio':portfolio_object.to_json()})
 
 
 
