@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^create$', views.CreatePortfolio.as_view(), name="create"),
     url(r'^show_list$', views.ShowPortfolio.as_view(), name="show_list"),
     url(r'^delete/(?P<id>[A-Za-z0-9-]+)$', views.DeletePortfolio.as_view(),
-    	 name='article-comment'),
+         name='delete'),
+    url(r'^update/(?P<id>[A-Za-z0-9-]+)$', views.UpdatePortfolio.as_view(),
+         name='update'),
     
 ]
