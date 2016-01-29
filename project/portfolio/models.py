@@ -12,6 +12,15 @@ class Portfolio(models.Model):
     def __str__(self):
         return self.portfolio_name
 
+    def to_json(self):
+        return dict(
+            id = self.id,
+            portfolio_name = self.portfolio_name
+            
+
+        )
+
+
 
 class Asset(models.Model):
     portfolio = models.ForeignKey(Portfolio)

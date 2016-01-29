@@ -131,7 +131,7 @@ class LoginUser(View):
             if "next" in request.session:
                 self.success_url = request.session["next"]
                 del request.session["next"]
-            request.session.set_expiry(300)
+            request.session.set_expiry(10000000)
             print(dir(request))
             # dict_profile = {'username': data.get('username'),
             #     'first_name':data.get('first_name'),
