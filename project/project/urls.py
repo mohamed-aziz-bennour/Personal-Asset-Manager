@@ -18,6 +18,7 @@ from django.contrib import admin
 from users import urls as users_urls
 from analysis import urls as analysis_urls
 from portfolio import urls as portfolio_urls
+from securities import urls as securities_urls
 
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     url(r'^users/', include(users_urls, namespace="users")),
     url(r'^analysis/', include(analysis_urls, namespace='analysis')),
     url(r'^portfolio/', include(portfolio_urls, namespace='portfolio')),
+    url(r'^securities/', include(securities_urls, namespace='securities')),
 ]
