@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 
 *$py.class
-.DS_Store
+*.DS_Store
 
 # C extensions
 *.so
@@ -74,7 +74,7 @@ secrets.py
 
 # secret file 
 project/secrets.py
-
+db.sqlite3
 
 # bad files 
 *~
