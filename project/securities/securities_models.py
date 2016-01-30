@@ -1,5 +1,6 @@
 from django.db import models
 from portfolio.models import Asset
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 
