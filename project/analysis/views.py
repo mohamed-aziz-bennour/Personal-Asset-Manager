@@ -66,3 +66,38 @@ class RiskView(View):
             "method": "POST",
             "submit_text": "Submit Risk Form"
         }
+
+class Investment_policyView(View):
+    template_name = 'analysis/index.html'
+    model = Investment_policy
+    form_class = Investment_policyForm
+    context = None
+
+    def get(self, request):
+        form = self.form_class()
+        self.context = self.get_context(form)
+        return render(request, self.template_name, self.context)
+
+    def post(self, request):
+        print('*****************in post')
+        form = self.form_class(data=request.POST)
+        print(form)
+        data=request.POST
+        print (data)
+        # if form.is_valid():
+        #     print('form valiiiiiiiiiiiiiiiiiiiiiiiiiud')
+        result = data
+        
+        # risk = form.save()
+        return JsonResponse({'result': result})
+        # else:
+        #     context = dict(form=form,submit_text='Create')
+        #     return render(request, self.template_name, context)
+
+    def get_context(self, form):
+        return {
+            "form": form,
+            "action": "analysis:policy",
+            "method": "POST",
+            "submit_text": "Submit Policy Form"
+        }

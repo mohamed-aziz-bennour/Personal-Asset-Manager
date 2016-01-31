@@ -30,13 +30,24 @@ class RiskForm(forms.ModelForm):
             'investment_return',
             ]
 
-class Investment_policyForm(forms.Form):
-    time_retirement = forms.ChoiceField(choices=TIME_RETIREMENT, label="", initial='', widget=forms.Select(), required=True)
-    liquidity_needs = forms.ChoiceField(choices=LIQIDITY_NEEDS, label="", initial='', widget=forms.Select(), required=True)
-    goal_short = forms.ChoiceField(choices=GOAL_SHORT, label="", initial='', widget=forms.Select(), required=True)
-    goal_mid = forms.ChoiceField(choices=GOAL_MID, label="", initial='', widget=forms.Select(), required=True)
-    goal_long = forms.ChoiceField(choices=GOAL_LONG, label="", initial='', widget=forms.Select(), required=True)
+class Investment_policyForm(forms.ModelForm):
+    time_retirement = forms.ChoiceField(choices=TIME_RETIREMENT, initial='', widget=forms.RadioSelect(), required=True)
+    liquidity_needs = forms.ChoiceField(choices=LIQIDITY_NEEDS, initial='', widget=forms.RadioSelect(), required=True)
+    goal_short = forms.ChoiceField(choices=GOAL_SHORT, initial='', widget=forms.RadioSelect(), required=True)
+    goal_mid = forms.ChoiceField(choices=GOAL_MID, initial='', widget=forms.RadioSelect(), required=True)
+    goal_long = forms.ChoiceField(choices=GOAL_LONG, initial='', widget=forms.RadioSelect(), required=True)
     expected_return = forms.DecimalField()
     expected_inflation = forms.DecimalField()
     # user_id = models(widget='HiddenInput')
+    class Meta:
+        model = Investment_policy
+        fields = [
+            'time_retirement',
+            'liquidity_needs',
+            'goal_short',
+            'goal_mid',
+            'goal_long',
+            'expected_return',
+            'expected_inflation',
+            ]
 
