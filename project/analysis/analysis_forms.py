@@ -14,11 +14,11 @@ class ClientForm(forms.Form):
     # user_id = forms.(widget='HiddenInput')
 
 class RiskForm(forms.ModelForm):
-    cash_reserves = forms.ChoiceField(choices=CASH_RESERVES, initial='', widget=forms.Select(), required=True)
-    time_horizont = forms.ChoiceField(choices=TIME_HORIZONT, initial='', widget=forms.Select(), required=True)
-    market_loss = forms.ChoiceField(choices=MARKET_LOSS, initial='', widget=forms.Select(), required=True)
-    investment_experience = forms.ChoiceField(choices=INVESTMENT_EXPERIENCE, initial='', widget=forms.Select(), required=True)
-    investment_return = forms.ChoiceField(choices=INVESTMENT_RETURN, initial='', widget=forms.Select(), required=True)
+    cash_reserves = forms.ChoiceField(choices=CASH_RESERVES, initial='', widget=forms.RadioSelect(), required=True)
+    time_horizont = forms.ChoiceField(choices=TIME_HORIZONT, initial='', widget=forms.RadioSelect(), required=True)
+    market_loss = forms.ChoiceField(choices=MARKET_LOSS, initial='', widget=forms.RadioSelect(), required=True)
+    investment_experience = forms.ChoiceField(choices=INVESTMENT_EXPERIENCE, initial='', widget=forms.RadioSelect(), required=True)
+    investment_return = forms.ChoiceField(choices=INVESTMENT_RETURN, initial='', widget=forms.RadioSelect(), required=True)
     # user_id = models.(widget='HiddenInput')
     class Meta:
         model = Risk
