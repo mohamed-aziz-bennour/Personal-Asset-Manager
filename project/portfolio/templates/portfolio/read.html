@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 
 <html lang="en">
 <head>
@@ -10,11 +11,54 @@
     <div class="header">
         <h2 class="heading">{{portfolio.portfolio_name}}</h2>
         <button><a href="{% url 'portfolio:show_list' %}">list portfolios</a></button>
-                    {% csrf_token %}
-                    {{ form.AssetForm.as_p }}
-                    {{ form.StockForm.as_p }}
-                    {{ form.BondForm.as_p }}
-                    {{ form.ExchangeTradedFundForm.as_p }}
+        <div class="asset-container"></div>  
+        <div class="form-container"></div>
+        <div class="form-container-asset"></div>
     </div>
+
+    <script id="asset-form-tmp" type="x-tmpl-mustache">
+        <form>
+            {% csrf_token %}
+            {{ form.AssetForm.as_p }}
+        </form>
+    </script>
+    <script id="stock-form-tmp" type="x-tmpl-mustache">
+        <form>
+            {% csrf_token %}
+            {{ form.StockForm.as_p }}
+        </form>
+    </script>
+    <script id="bond-form-tmp" type="x-tmpl-mustache">
+        <form>
+            {% csrf_token %}
+            {{ form.BondForm.as_p }}
+        </form>
+    </script>
+    <script id="etf-form-tmp" type="x-tmpl-mustache">
+        <form>
+            {% csrf_token %}
+            {{ form.ExchangeTradedFundForm.as_p }}
+        </form>
+    </script>
+    <script id="menu-tmp" type="x-tmpl-mustache">
+    {% verbatim %} 
+        {{{form}}}
+        <nav>
+            <ul>
+                <li><button id='bt1'>Stock</button></li>
+                <li><button id='bt2'>Bond</button></li>
+                <li><button id='bt3'>Exchange Traded Fund</button></li>
+            </ul>
+        </nav>
+    {% endverbatim %}
+    </script>
+
+
+   <!-- jQuery -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+        <script src="{% static 'portfolio/read.js' %}" type="application/javascript"></script>
+
 </body>
 </html>
