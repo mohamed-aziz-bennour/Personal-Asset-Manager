@@ -12,7 +12,7 @@ class Stock(models.Model):
 	market_capitalization = models.DecimalField(max_digits = 10, 
 		decimal_places = 2
 		)
-	assets = GenericRelation(Asset)
+	# assets = GenericRelation(Asset)
 
 
 class Bond(models.Model):
@@ -21,7 +21,7 @@ class Bond(models.Model):
 	coupon = models.DecimalField(max_digits = 2, decimal_places = 2)
 	maturity_date = models.DateTimeField(auto_now_add = False)
 	bond_type = models.CharField(max_length = 15)
-	assets = GenericRelation(Asset)
+	# assets = GenericRelation(Asset)
 
 
 class ExchangeTradedFund(models.Model):
@@ -33,5 +33,5 @@ class ExchangeTradedFund(models.Model):
 	alpha = models.FloatField(null=True,blank=True)
 	r_squared = models.FloatField(null=True,blank=True)
 	sharpe_ratio = models.FloatField(null=True,blank=True)
-	assets = GenericRelation(Asset)
+	# assets = GenericRelation(Asset)
 
