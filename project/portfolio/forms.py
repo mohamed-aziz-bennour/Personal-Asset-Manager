@@ -9,3 +9,12 @@ class PortfolioForm(forms.ModelForm):
         fields = [
             'portfolio_name',
             ]
+
+class AssetForm(forms.ModelForm):
+    class Meta:
+        model = Asset
+        fields = [
+            'quantity',
+            'cost_basis',
+            ]
+     

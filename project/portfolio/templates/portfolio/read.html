@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio</title>
+
+</head>
+<body>
+    <div class="header">
+        <h2 class="heading">{{portfolio.portfolio_name}}</h2>
+        <button><a href="{% url 'portfolio:show_list' %}">list portfolios</a></button>
+                    {% csrf_token %}
+                    {{ form.AssetForm.as_p }}
+                    {{ form.StockForm.as_p }}
+                    {{ form.BondForm.as_p }}
+                    {{ form.ExchangeTradedFundForm.as_p }}
+    </div>
+</body>
+</html>

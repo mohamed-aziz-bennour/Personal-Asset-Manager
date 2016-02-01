@@ -1,26 +1,25 @@
 <script id="list_template" type="x-tmpl-mustache">
     
         
-           <h3>This is your portfolio's list:</h3>
+     <h3>This is your portfolio list:</h3>
 
-              {% verbatim %}
+    {% verbatim %}
               
-            <div  class="list-group">
-                            {{#portfolios }}
+        <div  class="list-group">
+            {{#portfolios }}
+                            
                 <div  class="list-group-item">            
-            <a class="btn btn-info" href="">{{ portfolio_name}}</a>
-                <a class="btn btn-danger" href="/portfolio/delete/{{id}}">Delete</a>
-                
-                    <a class="update_link btn btn-warning" id="{{id}}"
-                    href="/portfolio/update/{{id}}">update</a>
-                
-            
-            </div>
+                        <a class="btn btn-info" href="/portfolio/portfolio_detail/{{id}}"> {{ portfolio_name}}</a>
+                        <a class="btn btn-danger" href="/portfolio/delete/{{id}}">Delete</a>
+                        <a class="update_link btn btn-warning" id="{{id}}"
+                        href="/portfolio/update/{{id}}">update</a>
+              
+                </div>
             {{/portfolios }}
         
-            </div>
+        </div>
                 
-                {% endverbatim %}
+    {% endverbatim %}
                     
             
     
