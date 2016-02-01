@@ -23,5 +23,6 @@ urlpatterns = [
          name='delete'),
     url(r'^update/(?P<id>[A-Za-z0-9-]+)$', views.UpdatePortfolio.as_view(),
          name='update'),
+    url(r'^portfolio_detail/(?P<pk>[A-Za-z0-9-]+)$', views.PortfolioDetailView.as_view(), name='portfolio_detail'),
     
 ]

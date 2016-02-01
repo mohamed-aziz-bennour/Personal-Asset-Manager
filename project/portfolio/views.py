@@ -3,8 +3,14 @@ from portfolio.models import Portfolio, Asset
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
-from portfolio.forms import PortfolioForm
+from portfolio.forms import PortfolioForm, AssetForm
+from securities.securities_forms import (
+    StockForm, BondForm, ExchangeTradedFundForm
+)
 from django.http import JsonResponse
+from django.views.generic import DetailView
+    
+
 
 
 # Create your views here.
@@ -98,3 +104,52 @@ class UpdatePortfolio(View):
 
 
 
+class PortfolioDetailView(DetailView):
+    model = Portfolio
+    template_name = 'portfolio/read.html'
+
+    def get_context_data(self,**kwargs):
+        context = {'form':{'AssetForm':AssetForm(),
+        'StockForm':StockForm(), 
+        'BondForm':BondForm(),
+        'ExchangeTradedFundForm':ExchangeTradedFundForm()
+        }}
+        return super().get_context_data(**context)
+
+
+# class CreateAsset(LoginRequiredMixin,View):
+#     template_name = "portfolio/read.html"
+#     form_class = AssetForm
+#     success_url = "portfolio:createAsset"
+#     context = None
+
+#     def get(self,request):
+#     return render(request, "todo/index.html", {'form':{'user':UserForm(),'todo':PostForm()}})
+
+    # def post(self,request):
+    #     form = self.form_class(data=request.POST)
+    #     data=request.POST
+    #     if form.is_valid(): 
+    #         portfolio = Portfolio.objects.create(
+    #             user = request.user,
+    #             portfolio_name=data.get('portfolio_name')
+    #             )
+            
+        
+    #         return redirect(self.success_url)
+    #     else:
+    #         self.context = self.get_context(form)
+    #         return self.render_to_response(request)
+
+
+        
+    # def get_context(self, form):
+    #     return {
+    #         "form": form,
+    #         "action": "portfolio:create",
+    #         "method": "POST",
+    #         "submit_text": "Add new Portfolio"
+    #     }
+
+    # def render_to_response(self, request):
+    #     return render(request, self.template_name, self.context)
