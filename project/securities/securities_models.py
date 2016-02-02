@@ -36,8 +36,17 @@ class Bond(models.Model):
 
     # assets = GenericRelation(Asset)
     # add to json here
+    def to_json(self):
+        return dict(
+            id = self.id,
+            symbol = self.symbol,
+            coupon = self.coupon,
+            maturity_date = self.maturity_date,
+            sp_rating= self.sp_rating,
+            moody_rating = self.moody_rating,
+            company_name = self.company_name
 
-
+        )
 
 
 class ExchangeTradedFund(models.Model):
