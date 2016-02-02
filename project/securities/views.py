@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from .securities_forms import StockForm
 from django.views.generic import View
+from securities.securities_models import Stock, Bond, ExchangeTradedFund
+from django.http import JsonResponse
+
+
 
 class StockAddView(View):
     template_name = 'securities/add_security.html'
@@ -18,12 +22,6 @@ class StockAddView(View):
         data=request.POST
         if form.is_valid(): 
             form.save()
-            # stock = Stock.objects.create(
-            #     user = request.user,
-            #     portfolio_name=data.get('portfolio_name')
-                # )
-            
-        
             return redirect(self.success_url)
         else:
             self.context = self.get_context(form)
@@ -42,11 +40,18 @@ class StockAddView(View):
     def render_to_response(self, request):
         return render(request, self.template_name, self.context)
 
-    # def post(self, request):
-    #   security_name = StockForm(request.POST)
-    #   context = {'stock':security_name}
-    #   if security_name.is_valid():
-    #       security = security_name.save()
-    #       return redirect('stock:add_security')
-    #   else:
-    #       return render(request, self.template_name, context)
+
+class StocksListView(View):
+    
+    def get(self,request):
+        stocks = Stock.objects.all()
+        stocks = [stock.to_json() for stock in stocks]
+        return JsonResponse({'stocks':stocks})
+
+class ETFListView(View):
+    
+    def get(self,request):
+        exchangeTradedFunds = ExchangeTradedFund.objects.all()
+        exchangeTradedFunds = [exchangeTradedFund.to_json() for exchangeTradedFund in exchangeTradedFunds]
+        return JsonResponse({'exchangeTradedFunds':exchangeTradedFunds})
+
