@@ -26,14 +26,15 @@ class Stock(models.Model):
 
 
 class Bond(models.Model):
-    symbol = models.CharField(max_length = 15)
     company_name = models.CharField(max_length = 255)
-    coupon = models.DecimalField(max_digits = 2, decimal_places = 2)
-    maturity_date = models.DateTimeField(auto_now_add = False)
-    bond_type = models.CharField(max_length = 15)
+    symbol = models.CharField(max_length = 15)
+    coupon = models.FloatField(null=True,blank=True)
+    maturity_date = models.DateField(null=True)
+    sp_rating = models.CharField(blank=True, null=True, max_length = 15)
+    moody_rating = models.CharField(blank=True, null=True, max_length = 15)
+
     # assets = GenericRelation(Asset)
 
-    # add a to_json here when art will push his code with the new bon model 
 
 
 class ExchangeTradedFund(models.Model):
