@@ -9,7 +9,7 @@ class StockForm(forms.ModelForm):
 class BondForm(forms.ModelForm):
 	class Meta:
 		model = Bond
-		fields = ['symbol', 'company_name', 'coupon', 'maturity_date', 'bond_type']
+		fields = ['symbol', 'company_name', 'coupon', 'maturity_date', 'sp_rating', 'moody_rating']
 
 
 class ExchangeTradedFundForm(forms.ModelForm):
