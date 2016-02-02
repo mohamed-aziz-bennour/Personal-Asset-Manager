@@ -26,6 +26,7 @@ class Stock(models.Model):
 
 
 class Bond(models.Model):
+
     company_name = models.CharField(max_length = 255)
     symbol = models.CharField(max_length = 15)
     coupon = models.FloatField(null=True,blank=True)
@@ -34,6 +35,8 @@ class Bond(models.Model):
     moody_rating = models.CharField(blank=True, null=True, max_length = 15)
 
     # assets = GenericRelation(Asset)
+    # add to json here
+
 
 
 
