@@ -13,7 +13,9 @@
         <button><a href="{% url 'portfolio:show_list' %}">list portfolios</a></button>
         <div class="asset-container"></div>  
         <div class="form-container"></div>
-        <div class="form-container-asset"></div>
+        <!-- <div class="form-container-asset"></div> -->
+        <div class="securities-container"></div>
+
     </div>
 
     <script id="asset-form-tmp" type="x-tmpl-mustache">
@@ -22,24 +24,7 @@
             {{ form.AssetForm.as_p }}
         </form>
     </script>
-    <script id="stock-form-tmp" type="x-tmpl-mustache">
-        <form>
-            {% csrf_token %}
-            {{ form.StockForm.as_p }}
-        </form>
-    </script>
-    <script id="bond-form-tmp" type="x-tmpl-mustache">
-        <form>
-            {% csrf_token %}
-            {{ form.BondForm.as_p }}
-        </form>
-    </script>
-    <script id="etf-form-tmp" type="x-tmpl-mustache">
-        <form>
-            {% csrf_token %}
-            {{ form.ExchangeTradedFundForm.as_p }}
-        </form>
-    </script>
+   
     <script id="menu-tmp" type="x-tmpl-mustache">
     {% verbatim %} 
         {{{form}}}
@@ -51,7 +36,9 @@
             </ul>
         </nav>
     {% endverbatim %}
-        <select id="stocks_choice"> </select>
+        <input id='content-type' name='content_type'>
+        <select id="choice"> </select>
+       
     </script>
 
 

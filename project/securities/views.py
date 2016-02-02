@@ -46,12 +46,18 @@ class StocksListView(View):
     def get(self,request):
         stocks = Stock.objects.all()
         stocks = [stock.to_json() for stock in stocks]
-        return JsonResponse({'stocks':stocks})
+        return JsonResponse({'stocks':stocks, 'content_type':'stock'})
 
 class ETFListView(View):
     
     def get(self,request):
         exchangeTradedFunds = ExchangeTradedFund.objects.all()
         exchangeTradedFunds = [exchangeTradedFund.to_json() for exchangeTradedFund in exchangeTradedFunds]
-        return JsonResponse({'exchangeTradedFunds':exchangeTradedFunds})
+        return JsonResponse({'exchangeTradedFunds':exchangeTradedFunds, 'content_type':'etf'})
 
+class BondsListView(View):
+    
+    def get(self,request):
+        bonds = Bond.objects.all()
+        bonds = [bond.to_json() for bond in bonds]
+        return JsonResponse({'bonds':bonds, 'content_type':'bond'})
