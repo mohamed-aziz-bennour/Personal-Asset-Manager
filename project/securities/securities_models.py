@@ -33,6 +33,8 @@ class Bond(models.Model):
     bond_type = models.CharField(max_length = 15)
     # assets = GenericRelation(Asset)
 
+    # add a to_json here when art will push his code with the new bon model 
+
 
 class ExchangeTradedFund(models.Model):
     symbol = models.CharField(max_length = 15)
