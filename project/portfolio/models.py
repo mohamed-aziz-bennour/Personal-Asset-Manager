@@ -16,8 +16,6 @@ class Portfolio(models.Model):
         return dict(
             id = self.id,
             portfolio_name = self.portfolio_name
-            
-
         )
 
 
@@ -29,3 +27,14 @@ class Asset(models.Model):
     object_id = models.PositiveIntegerField()
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     content_object = GenericForeignKey('content_type', 'object_id') 
+    
+
+
+    def to_json(self):
+        return dict(
+            id = self.id,
+            quantity = self.quantity ,
+            cost_basis = self.cost_basis ,
+            
+
+        )

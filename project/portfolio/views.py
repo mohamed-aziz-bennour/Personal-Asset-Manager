@@ -34,6 +34,7 @@ class CreatePortfolio(LoginRequiredMixin,View):
                 user = request.user,
                 portfolio_name=data.get('portfolio_name')
                 )
+            return JsonResponse({'message': 'success'})
             
         
             return redirect(self.success_url)
