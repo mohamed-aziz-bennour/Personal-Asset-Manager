@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from .securities_forms import StockForm
 from django.views.generic import View
+from portfolio.models import Asset, Portfolio
 from securities.securities_models import Stock, Bond, ExchangeTradedFund
 from django.http import JsonResponse
 
 
 
-class StockAddView(View):
+class AddView(View):
     template_name = 'securities/add_security.html'
-    form_class = StockForm
+   
     success_url = "securities:create"
     context = None
 
@@ -18,14 +19,32 @@ class StockAddView(View):
         return self.render_to_response(request)
 
     def post(self,request):
-        form = self.form_class(data=request.POST)
+        # form = self.form_class(data=request.POST)
+        data = request.POST
+        id_int = int(data.get('choice_asset').split(',')[1])
+        content_type = data.get('content_type')
+        if content_type =='stock': 
+            asset_spec = Stock.objects.get(id=id_int)
+        elif content_type == "etf":
+            asset_spec = ExchangeTradedFund.objects.get(id=id_int)
+        elif content_type =='bond':
+            asset_spec = Bond.objects.get(id=id_int)
+
+
+        content_object = asset_spec
+        id_portfolio = int(data.get('id_portfolio'))
+        portfolio =Portfolio.objects.get(id=id_portfolio)
+
         data=request.POST
-        if form.is_valid(): 
-            form.save()
-            return redirect(self.success_url)
-        else:
-            self.context = self.get_context(form)
-            return self.render_to_response(request)
+        asset = Asset.objects.create(
+            quantity = int(data.get('quantity')),
+            cost_basis = float(data.get('cost_basis')),
+            content_object = content_object,
+            portfolio = portfolio
+
+            )
+        print(asset)
+        return JsonResponse({'asset':asset.to_json()})
 
 
         
