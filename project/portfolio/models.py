@@ -35,6 +35,9 @@ class Asset(models.Model):
             id = self.id,
             quantity = self.quantity ,
             cost_basis = self.cost_basis ,
+            content_object = self.content_object.to_json(),
+            content_type = str(self.content_type),
+            object_id = str(self.object_id)
             
 
         )
