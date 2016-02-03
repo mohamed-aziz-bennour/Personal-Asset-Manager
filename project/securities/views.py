@@ -8,15 +8,7 @@ from django.http import JsonResponse
 
 
 class AddView(View):
-    template_name = 'securities/add_security.html'
-   
-    success_url = "securities:create"
-    context = None
 
-    def get(self, request):
-        form = self.form_class()
-        self.context = self.get_context(form)
-        return self.render_to_response(request)
 
     def post(self,request):
         # form = self.form_class(data=request.POST)
@@ -46,18 +38,16 @@ class AddView(View):
         print(asset)
         return JsonResponse({'asset':asset.to_json()})
 
+class ListAsset(View): 
+    def get(self,request,id):
+        portfolio =Portfolio.objects.get(id=id)
+        assets = Asset.objects.filter(portfolio=portfolio)
+        print(assets[0].content_object)
+        assets = [ asset.to_json() for asset in assets ]
+        print(assets)
+        return JsonResponse({'asset':assets})
 
-        
-    def get_context(self, form):
-        return {
-            "form": form,
-            "action": "securities:create",
-            "method": "POST",
-            "submit_text": "Add new stock"
-        }
 
-    def render_to_response(self, request):
-        return render(request, self.template_name, self.context)
 
 
 class StocksListView(View):
