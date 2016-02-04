@@ -22,7 +22,7 @@
         <form action="/securities/create" method="POST">
             {% csrf_token %}
             {{ form.AssetForm.as_p }}
-            <input value="{{portfolio.id}}" name='id_portfolio'>
+            <input value="{{portfolio.id}}" id='portfolio_id' name='id_portfolio'>
              <input id='content-type' name='content_type'>
             <select id="choice" name="choice_asset"> </select>
             <input type="submit">
@@ -38,6 +38,28 @@
                 <li><button id='bt2'>Bond</button></li>
                 <li><button id='bt3'>Exchange Traded Fund</button></li>
             </ul>
+        </nav>
+    
+       
+        {% endverbatim %}
+    </script>
+
+    <script id="asset-tmp" type="x-tmpl-mustache">
+    {% verbatim %} 
+        
+        <nav>
+        {{#asset}}
+            <ul>
+                {{id}}
+                {{quantity}}
+                {{cost_basis}}
+                {{content_type}}  
+                {{content_id}} 
+                {{content_object.symbol}}
+                {{content_object}}
+                
+            </ul>
+        {{/asset}}
         </nav>
     
        

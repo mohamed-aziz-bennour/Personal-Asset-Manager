@@ -1,4 +1,6 @@
 $(document).ready(function(){
+        
+
         var asset_template = $('#asset-form-tmp').html();
         var template = $('#menu-tmp').html();
         var rendered = Mustache.render(template,{'form':asset_template});
@@ -81,5 +83,20 @@ $(document).ready(function(){
         $('.securities-container').append( items.join('') );
 
         }); 
+
+
+       var $portfolio_id = $('#portfolio_id').val();
+        console.log($('#portfolio_id').val());
+        var getAssets = function getAssets(port){
+                $.get("/securities/list_asset/"+ port ,function(data){
+                console.log(data);
+                var template = $('#asset-tmp').html();
+                var rendered = Mustache.render(template,data);
+                $('div.asset-container').html(rendered);
+          
+            });
+        }
+
+        getAssets($portfolio_id);
 
 });
