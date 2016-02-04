@@ -19,7 +19,7 @@
     </div>
 
     <script id="asset-form-tmp" type="x-tmpl-mustache">
-        <form action="/securities/create" method="POST">
+        <form action="/securities/create" method="POST" id="add_asset">
             {% csrf_token %}
             {{ form.AssetForm.as_p }}
             <input value="{{portfolio.id}}" id='portfolio_id' name='id_portfolio'>
@@ -44,27 +44,31 @@
         {% endverbatim %}
     </script>
 
+
+
     <script id="asset-tmp" type="x-tmpl-mustache">
-    {% verbatim %} 
+            {% verbatim %} 
         
-        <nav>
-        {{#asset}}
-            <ul>
-                {{id}}
-                {{quantity}}
-                {{cost_basis}}
-                {{content_type}}  
-                {{content_id}} 
-                {{content_object.symbol}}
-                {{content_object}}
-                
-            </ul>
-        {{/asset}}
-        </nav>
+                <nav>
+                    {{#asset}}
+                        <ul>
+                            {{id}}
+                            {{quantity}}
+                            {{cost_basis}}
+                            {{content_type}}  
+                            {{content_id}} 
+                            {{content_object.symbol}}
+                            {{content_object}}
+                    
+                        </ul>
+                    {{/asset}}
+                </nav>
     
        
-        {% endverbatim %}
+            {% endverbatim %}
     </script>
+
+
 
 
    <!-- jQuery -->
