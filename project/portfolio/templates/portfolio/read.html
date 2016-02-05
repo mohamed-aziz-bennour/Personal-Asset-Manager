@@ -62,14 +62,18 @@
                                 {{content_object}}
                                 
                         </a>
-
+                            <div class="asset-info"></div>
                         </li>
                     {{/asset}}
                 </ul>
-                <div class="asset-info"></div>
-    
+
+            {% endverbatim %}   
+            <form id="analyse" action="{% analysis:asset_risk %}">
+            <input value="{{portfolio.id}}" id='portfolio_id' name='id_portfolio' readonly>
+            <input type="submit" value="Analyse">
+            </form>
        
-            {% endverbatim %}
+            
     </script>
 
 
