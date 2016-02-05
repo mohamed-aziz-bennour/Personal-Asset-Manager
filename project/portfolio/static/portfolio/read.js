@@ -72,7 +72,6 @@ $(document).ready(function(){
 
 
         var $portfolio_id = $('#portfolio_id').val();
-        console.log($('#portfolio_id').val());
         var getAssets = function getAssets(port){
                 $.get("/securities/list_asset/"+ port ,function(data){
                 console.log(data);
@@ -94,5 +93,42 @@ $(document).ready(function(){
 
         
     });
+
+
+    $('div.asset-container').on('click','a',function(){
+            event.preventDefault();
+            var symbol = $(this).data('content_object')
+            console.log(symbol)
+            var type_asset = $(this).data('content_type')
+
+            if(type_asset==='stock'){
+                var path = "/securities/stock_detail/"+ symbol;
+                $.get(path, function(data){
+                    var template = $('#stock-tmp').html();
+                    var rendered = Mustache.render(template,data);
+                    $('div.asset-info').html(rendered);
+                   
+                });
+            } else if ( type_asset==='bond'){
+                var path = "/securities/bond_detail/"+ symbol;
+                $.get(path, function(data){
+                    var template = $('#bond-tmp').html();
+                    var rendered = Mustache.render(template,data);
+                    $('div.asset-info').html(rendered);
+                });
+
+            } else {
+                var path = "/securities/etf_detail/"+ symbol;
+                $.get(path, function(data){
+                    var template = $('#etf-tmp').html();
+                    var rendered = Mustache.render(template,data);
+                    $('div.asset-info').html(rendered);
+                    
+                });
+
+            }
+            
+
+    })
 
 });
