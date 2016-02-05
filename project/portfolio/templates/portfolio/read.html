@@ -17,7 +17,7 @@
         <div class="securities-container"></div>
 
     </div>
-
+    
     <script id="asset-form-tmp" type="x-tmpl-mustache">
         <form action="/securities/create" method="POST" id="add_asset">
             {% csrf_token %}
@@ -49,24 +49,104 @@
     <script id="asset-tmp" type="x-tmpl-mustache">
             {% verbatim %} 
         
-                <nav>
+                <ul>
                     {{#asset}}
-                        <ul>
-                            {{id}}
-                            {{quantity}}
-                            {{cost_basis}}
-                            {{content_type}}  
-                            {{content_id}} 
-                            {{content_object.symbol}}
-                            {{content_object}}
-                    
-                        </ul>
+                        <li>
+                        <a id ='asset-link' data-content_type="{{content_type}}" data-content_object="{{content_object.id}}" href=""> 
+                                {{id}}
+                                {{quantity}}
+                                {{cost_basis}}
+                                {{content_type}}  
+                                {{content_id}} 
+                                {{content_object.symbol}} 
+                                {{content_object}}
+                                
+                        </a>
+
+                        </li>
                     {{/asset}}
-                </nav>
+                </ul>
+                <div class="asset-info"></div>
     
        
             {% endverbatim %}
     </script>
+
+
+    <script id="stock-tmp" type="x-tmpl-mustache">
+            {% verbatim %} 
+        
+                    {{#stock}}
+                        <div>
+                           
+                            {{symbol}}
+                            {{company_name}}
+                            {{sector}}
+                            {{industry}}
+                            {{market_capitalization}}
+                    
+                        </div>
+                    {{/stock}}
+
+    
+       
+            {% endverbatim %}
+    </script>
+
+    <script id="bond-tmp" type="x-tmpl-mustache">
+
+            {% verbatim %} 
+        
+                <div>
+                    {{#bond}}
+                        <ul>
+                           
+                            {{symbol}}
+                            {{company_name}}
+                            {{coupon}}
+                            {{maturity_date}}
+                            {{sp_rating}}
+                            {{moody_rating}}
+                    
+                        </ul>
+                    {{/bond}}
+                </div>
+    
+       
+            {% endverbatim %}
+
+
+    </script>
+
+    <script id="etf-tmp" type="x-tmpl-mustache">
+
+            {% verbatim %} 
+        
+                <div>
+                    {{#etf}}
+                        <ul>
+                           
+                            {{symbol}}
+                            {{name}}
+                            {{category}}
+                            {{fund_family}}
+                            {{beta}}
+                            {{alpha}}
+                            {{r_squared}}
+                            {{sharpe_ratio}}
+                    
+                        </ul>
+                    {{/etf}}
+                </div>
+    
+       
+            {% endverbatim %}
+
+
+
+    </script>
+
+
 
 
 
@@ -76,6 +156,14 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
         <script src="{% static 'portfolio/read.js' %}" type="application/javascript"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 </body>
 </html>

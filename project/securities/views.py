@@ -70,3 +70,25 @@ class BondsListView(View):
         bonds = Bond.objects.all()
         bonds = [bond.to_json() for bond in bonds]
         return JsonResponse({'bonds':bonds, 'content_type':'bond'})
+
+
+class StockDetail(View):
+
+    def get(self,request,symbol):
+        stock = Stock.objects.get(id=symbol)
+        return JsonResponse({'stock':stock.to_json()})
+
+
+class BondDetail(View):
+
+    def get(self,request,symbol):
+        bond = Bond.objects.get(id=symbol)
+        return JsonResponse({'bond':bond.to_json()})
+
+
+
+class ETFDetail(View):
+
+    def get(self,request,symbol):
+        etf = ExchangeTradedFund.objects.get(id=symbol)
+        return JsonResponse({'etf':etf.to_json()})
