@@ -36,7 +36,7 @@ class AddView(View):
 
             )
         print(asset)
-        return JsonResponse({'asset':asset.to_json()})
+        return JsonResponse({'asset':asset.to_json(0,1)})
 
 class ListAsset(View): 
     def get(self,request,id):
