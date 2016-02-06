@@ -3,7 +3,7 @@ from django.views.generic import View
 from .analysis_models import Client, Risk, Investment_policy
 from .analysis_forms import ClientForm, RiskForm, Investment_policyForm 
 from django.http import JsonResponse
-from analysis.utilities import Risk, ModelPortfolio
+# from analysis.utilities import Risk, ModelPortfolio
 from portfolio.models import Portfolio
 
 class ClientCreateView(View):

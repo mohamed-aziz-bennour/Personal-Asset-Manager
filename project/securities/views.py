@@ -41,11 +41,18 @@ class AddView(View):
 class ListAsset(View): 
     def get(self,request,id):
         portfolio =Portfolio.objects.get(id=id)
-        assets = Asset.objects.filter(portfolio=portfolio)
-        print(assets[0].content_object)
-        assets = [ asset.to_json() for asset in assets ]
+        # assets = Asset.objects.filter(portfolio=portfolio)
+        assets= Asset.objects.raw('SELECT *, cost_basis * quantity as value FROM portfolio_asset')
         print(assets)
-        return JsonResponse({'asset':assets})
+        portfolio_value = 0 
+        for asset in assets:
+            portfolio_value += asset.value
+        for asset in assets:
+            print(asset.value)
+        assets = [ asset.to_json(asset.value,portfolio_value)for asset in assets ]
+
+        print(assets)
+        return JsonResponse({'asset':assets,'portfolio_value':portfolio_value})
 
 
 
