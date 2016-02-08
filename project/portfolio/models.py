@@ -23,8 +23,8 @@ class Portfolio(models.Model):
 
 class Asset(models.Model):
     portfolio = models.ForeignKey(Portfolio)
-    quantity = models.IntegerField()
-    cost_basis = models.DecimalField(max_digits = 6, decimal_places = 2)
+    quantity = models.IntegerField(default = 0)
+    cost_basis = models.DecimalField(max_digits = 6, decimal_places = 2,default = 0.00)
     object_id = models.PositiveIntegerField()
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     content_object = GenericForeignKey('content_type', 'object_id') 

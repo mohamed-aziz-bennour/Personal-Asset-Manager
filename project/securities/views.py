@@ -5,6 +5,7 @@ from portfolio.models import Asset, Portfolio
 from securities.securities_models import Stock, Bond, ExchangeTradedFund
 from django.http import JsonResponse
 from django.contrib.contenttypes.models import ContentType
+from decimal import *
 
 
 
@@ -30,21 +31,34 @@ class AddView(View):
 
         data=request.POST
 
-        asset1 = Asset.objects.get(object_id=asset_spec.id, 
+        asset, created  = Asset.objects.get_or_create(object_id=asset_spec.id, 
             content_type=ContentType.objects.get_for_model(asset_spec),
             portfolio = portfolio
                 )
-        print(asset1)
+        if created:
+            asset.quantity = int(data.get('quantity'))
+            asset.cost_basis = data.get('cost_basis')
+        else: 
+            total_quantity = asset.quantity + int(data.get('quantity'))
+            print(total_quantity)
+            value_old_assets = Decimal(asset.cost_basis) * asset.quantity
+            print(value_old_assets)
+            value_new_assets = int(data.get('quantity')) * Decimal(data.get('cost_basis'))
+            print(value_new_assets)
+            asset.cost_basis = (value_new_assets + value_old_assets) /  total_quantity
+            asset.quantity = total_quantity
 
+        # asset = Asset.objects.create(
+        #     quantity = int(data.get('quantity')),
+        #     cost_basis = float(data.get('cost_basis')),
+        #     content_object = content_object,
+        #     portfolio = portfolio
 
-        asset = Asset.objects.create(
-            quantity = int(data.get('quantity')),
-            cost_basis = float(data.get('cost_basis')),
-            content_object = content_object,
-            portfolio = portfolio
-
-            )
+        #     )
         print(asset)
+        asset.save()
+        
+        
         return JsonResponse({'asset':asset.to_json(0,1)})
 
 class ListAsset(View): 
@@ -54,15 +68,14 @@ class ListAsset(View):
         assets= Asset.objects.raw('''SELECT *, cost_basis * quantity as value 
             FROM portfolio_asset
             WHERE portfolio_asset.portfolio_id = %s ''',(id,))
-        print(assets)
+        # print(assets)
         portfolio_value = 0 
         for asset in assets:
             portfolio_value += asset.value
-        for asset in assets:
-            print(asset.value)
+        
         assets = [ asset.to_json(asset.value,portfolio_value)for asset in assets ]
 
-        print(assets)
+        # print(assets)
         return JsonResponse({'asset':assets,'portfolio_value':portfolio_value})
 
 
