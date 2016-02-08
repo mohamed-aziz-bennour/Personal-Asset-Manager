@@ -97,16 +97,17 @@ $(document).ready(function(){
 
     $('div.asset-container').on('click','a',function(){
             event.preventDefault();
-            var symbol = $(this).data('content_object')
+            var $target = $(this).parent('li');
+            var symbol = $(this).data('content_object');
             console.log(symbol)
-            var type_asset = $(this).data('content_type')
+            var type_asset = $(this).data('content_type');
 
             if(type_asset==='stock'){
                 var path = "/securities/stock_detail/"+ symbol;
                 $.get(path, function(data){
                     var template = $('#stock-tmp').html();
                     var rendered = Mustache.render(template,data);
-                    $('div.asset-info').html(rendered);
+                    $target.find('div.asset-info').html(rendered);
                    
                 });
             } else if ( type_asset==='bond'){
@@ -114,7 +115,10 @@ $(document).ready(function(){
                 $.get(path, function(data){
                     var template = $('#bond-tmp').html();
                     var rendered = Mustache.render(template,data);
-                    $('div.asset-info').html(rendered);
+                    $target.find('div.asset-info').html(rendered);
+
+
+
                 });
 
             } else {
@@ -122,7 +126,7 @@ $(document).ready(function(){
                 $.get(path, function(data){
                     var template = $('#etf-tmp').html();
                     var rendered = Mustache.render(template,data);
-                    $('div.asset-info').html(rendered);
+                    $target.find('div.asset-info').html(rendered);
                     
                 });
 
