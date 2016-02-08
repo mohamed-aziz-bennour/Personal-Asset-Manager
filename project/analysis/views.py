@@ -104,6 +104,8 @@ class Investment_policyView(View):
 
 
 class BetaAnalysisView(View):
+    model = Portfolio
+    template_name = 'portfolio/read.html'
 
     def get(self,request,id):
         portfolio_object = Portfolio.objects.get(id=id)
@@ -111,10 +113,14 @@ class BetaAnalysisView(View):
         assets = portfolio_object.asset_set.exclude(content_type=bond)
         risk = Risk()
 
+        context = {}
+
         for asset in assets:
            symbol = asset.content_object.symbol
-           risk.run_analysis(symbol)
-        return JsonResponse({'response':'yes'})
+           stock = risk.run_analysis(symbol)
+           context[symbol] = stock
+           
+        return JsonResponse({'response':context})
 
 
 
