@@ -28,8 +28,8 @@ class Investment_policy(models.Model):
 	goal_short = models.CharField(max_length=50, choices=GOAL_SHORT)
 	goal_mid = models.CharField(max_length=50, choices=GOAL_MID)
 	goal_long = models.CharField(max_length=50, choices=GOAL_LONG)
-	expected_return = models.DecimalField(max_digits=2, decimal_places=2)
-	expected_inflation = models.DecimalField(max_digits=2, decimal_places=2)
+	expected_return = models.DecimalField(max_digits=3, decimal_places=2)
+	expected_inflation = models.DecimalField(max_digits=3, decimal_places=2)
 	user = models.OneToOneField(User)
 	
 	

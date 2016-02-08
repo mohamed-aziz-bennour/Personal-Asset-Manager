@@ -3,7 +3,8 @@ from django.views.generic import View
 from .analysis_models import Client, Risk, Investment_policy
 from .analysis_forms import ClientForm, RiskForm, Investment_policyForm 
 from django.http import JsonResponse
-# from analysis.utilities import Risk, ModelPortfolio
+from analysis.utilities.risk_calc import Risk
+# from analysis.utilities.model_portfolio import ModelPortfolio
 from portfolio.models import Portfolio
 
 class ClientCreateView(View):
@@ -82,9 +83,14 @@ class Investment_policyView(View):
 
     def post(self, request):
         form = self.form_class(data=request.POST)
-        data=request.POST
-        result = data
-        return JsonResponse({'result': result})
+        if form.is_valid():
+            investment_policy = form.save(commit = False)
+            investment_policy.user = request.user 
+            investment_policy.save()
+            return render(request, "users/welcome.html")
+        # What do you want to do with this
+        print(form.errors)
+        return JsonResponse({'result': 'failed'})
 
     def get_context(self, form):
         return {
@@ -96,24 +102,24 @@ class Investment_policyView(View):
 
 
 
-class Risk_calculationsView(View):
-    template_name = 'analysis/risk_analysis.html'
+# class Risk_calculationsView(View):
+#     template_name = 'analysis/risk_analysis.html'
 
 
 
 
-# class Profit_loss(View):
-#     template_name = 'analysis/p_l.html'
-#     model = Portfolio
-#     context = None
+class Profit_loss(View):
+    template_name = 'analysis/p_l.html'
+    model = Portfolio
+    context = None
 
-#     def post(self, request):
-#         form = self.form_class(data=request.POST)
-#         data=request.POST
-#         result = data
-#         return JsonResponse({'result': result})
+    def post(self, request):
+        form = self.form_class(data=request.POST)
+        data=request.POST
+        result = data
+        return JsonResponse({'result': result})
 
-#         hgfjhgfjhgfkghj
+#        
 
 
 
