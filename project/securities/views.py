@@ -4,6 +4,7 @@ from django.views.generic import View
 from portfolio.models import Asset, Portfolio
 from securities.securities_models import Stock, Bond, ExchangeTradedFund
 from django.http import JsonResponse
+from django.contrib.contenttypes.models import ContentType
 
 
 
@@ -28,6 +29,14 @@ class AddView(View):
         portfolio =Portfolio.objects.get(id=id_portfolio)
 
         data=request.POST
+
+        asset1 = Asset.objects.get(object_id=asset_spec.id, 
+            content_type=ContentType.objects.get_for_model(asset_spec),
+            portfolio = portfolio
+                )
+        print(asset1)
+
+
         asset = Asset.objects.create(
             quantity = int(data.get('quantity')),
             cost_basis = float(data.get('cost_basis')),
@@ -42,7 +51,9 @@ class ListAsset(View):
     def get(self,request,id):
         portfolio =Portfolio.objects.get(id=id)
         # assets = Asset.objects.filter(portfolio=portfolio)
-        assets= Asset.objects.raw('SELECT *, cost_basis * quantity as value FROM portfolio_asset')
+        assets= Asset.objects.raw('''SELECT *, cost_basis * quantity as value 
+            FROM portfolio_asset
+            WHERE portfolio_asset.portfolio_id = %s ''',(id,))
         print(assets)
         portfolio_value = 0 
         for asset in assets:
