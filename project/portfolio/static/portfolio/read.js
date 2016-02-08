@@ -85,14 +85,14 @@ $(document).ready(function(){
         getAssets($portfolio_id);
 
         $('div.form-container').on('submit', '#add_asset',function(event){
-        event.preventDefault();
-        var action = "/securities/create" ; 
-        $.post(action, $(this).serialize(), function(data){
-           getAssets($portfolio_id); 
-        });
+            event.preventDefault();
+            var action = "/securities/create" ; 
+            $.post(action, $(this).serialize(), function(data){
+               getAssets($portfolio_id); 
+                });
 
         
-    });
+         });
 
 
     $('div.asset-container').on('click','a',function(){
@@ -130,5 +130,17 @@ $(document).ready(function(){
             
 
     })
+
+    $('div.asset-container').on('click','#delete',function(){
+        event.preventDefault();
+        var id = $(this).data('id_asset')
+        var path = "/securities/delete/"+ id;
+                $.get(path, function(data){
+
+                getAssets($portfolio_id);
+                });
+
+
+    });
 
 });

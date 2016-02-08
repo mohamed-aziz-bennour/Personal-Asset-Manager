@@ -48,14 +48,6 @@ class AddView(View):
             asset.cost_basis = (value_new_assets + value_old_assets) /  total_quantity
             asset.quantity = total_quantity
 
-        # asset = Asset.objects.create(
-        #     quantity = int(data.get('quantity')),
-        #     cost_basis = float(data.get('cost_basis')),
-        #     content_object = content_object,
-        #     portfolio = portfolio
-
-        #     )
-        print(asset)
         asset.save()
         
         
@@ -123,3 +115,13 @@ class ETFDetail(View):
     def get(self,request,symbol):
         etf = ExchangeTradedFund.objects.get(id=symbol)
         return JsonResponse({'etf':etf.to_json()})
+
+
+
+class DeleteAsset(View):
+    
+    
+    def get(self,request,id):
+        asset_object = Asset.objects.get(id=id,).delete()
+        return JsonResponse({'message':'asset deleted'})
+       

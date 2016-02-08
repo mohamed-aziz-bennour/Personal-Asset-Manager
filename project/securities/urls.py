@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^stock_detail/(?P<symbol>[A-Za-z0-9-]+)$', views.StockDetail.as_view(), name='stock_detail'),
     url(r'^bond_detail/(?P<symbol>[A-Za-z0-9-]+)$', views.BondDetail.as_view(), name='bond_detail'),
     url(r'^etf_detail/(?P<symbol>[A-Za-z0-9-]+)$', views.ETFDetail.as_view(), name='etf_detail'),
+    url(r'^delete/(?P<symbol>[A-Za-z0-9-]+)$', views.DeleteAsset.as_view(), name='delete'),
     ]
