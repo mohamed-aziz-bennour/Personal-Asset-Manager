@@ -51,10 +51,10 @@
     <script id="asset-tmp" type="x-tmpl-mustache">
             {% verbatim %} 
         
-                <ul>
+                <ul class="list-group">
                     {{#asset}}
-                        <li>
-                        <a id ='asset-link' data-content_type="{{content_type}}" data-content_object="{{content_object.id}}" href=""> 
+                        <li class="list-group-item">
+                        <a  role="button" class="btn btn-default" id ='asset-link' data-content_type="{{content_type}}" data-content_object="{{content_object.id}}" href=""> 
                                 {{id}}
                                 ${{value}}
                                 {{weight}}
@@ -63,8 +63,10 @@
                                 {{content_type}}  
                                 {{content_id}} 
                                 {{content_object.symbol}} 
-                                {{content_object}}
                                 
+                                
+                        </a>
+                        <a role="button" class="btn btn-danger" id='delete' data-id_asset="{{id}}" href="" > Delete from portfolio
                         </a>
                             <div class="asset-info"></div>
                         </li>
