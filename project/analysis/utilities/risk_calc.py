@@ -1,36 +1,42 @@
 import pandas as pd
 import numpy as np
-from pandas.io.data import DataReader
-from pandas.io import data, wb
+from pandas_datareader import data, wb
 import datetime
 from datetime import date
 
+
 class Risk:
 
-	def __init__(self, symbol):
-
-		self.symbol = symbol
+	def __init__(self):
+		self.start_date = None
+		self.end_date = None
+		self.period = None
+		self.stock_returns = None
+		self.sp_returns = None
+		self.beta = None
+		self.alpha = None
+	
+	def run_analysis(self, symbol):
 		self.start_date = date(2010,12,31)
 		self.end_date = date(2013,12,31)
 		self.period = 12
-		self.stock_returns = self.calculate_stock_returns()
+		self.stock_returns = self.calculate_stock_returns(symbol)
 		self.sp_returns = self.calculate_sp_returns()
 		self.beta = self.calculate_beta()
 		self.alpha = self.calculate_alpha()
-		
-		
+		return self.risk_report()
 
-	def get_data(self):
-		stock = DataReader(self.symbol,'yahoo',self.start_date, self.end_date)
+	def get_data(self, symbol):
+		stock = data.DataReader(symbol,'yahoo',self.start_date, self.end_date)
 		return stock
 
 	def get_sp_data(self):
-		sp = DataReader('^GSPC','yahoo',self.start_date, self.end_date)
+		sp = data.DataReader('^GSPC','yahoo',self.start_date, self.end_date)
 		return sp
 
 
-	def calculate_stock_returns(self):
-		stock = self.get_data()
+	def calculate_stock_returns(self, symbol):
+		stock = self.get_data(symbol)
 		data = pd.DataFrame({'stock_adj_close':stock['Adj Close']}, index=stock.index)
 		data[['stock_returns']] = data[['stock_adj_close']]/data[['stock_adj_close']].shift(1)-1 
 		stock_return = data.dropna()
@@ -92,8 +98,7 @@ class Risk:
 		return risk_report
 
 
-r=Risk('MSFT')
-r.risk_report()
+
 
 
 

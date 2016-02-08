@@ -11,6 +11,8 @@
     <div class="header">
         <h2 class="heading">{{portfolio.portfolio_name}}</h2>
         <button><a href="{% url 'portfolio:show_list' %}">list portfolios</a></button>
+        <button><a href="{% url 'analysis:beta_analysis' id=portfolio.id %}">Run analysis</a></button>
+       
         <div class="asset-container"></div>  
         <div class="form-container"></div>
         <!-- <div class="form-container-asset"></div> -->
@@ -150,8 +152,7 @@
        
             {% endverbatim %}
 
-
-
+           
     </script>
 
 
