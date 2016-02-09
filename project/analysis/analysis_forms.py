@@ -3,7 +3,7 @@ from analysis.analysis_models import Client, Risk, Investment_policy
 from analysis.analysis_choices import *
 
 
-class ClientForm(forms.Form):
+class ClientForm(forms.ModelForm):
     age = forms.ChoiceField(choices=AGE, label="", initial='', widget=forms.Select(), required=True)
     marital_status = forms.ChoiceField(choices=MARITAL_STATUS, label="", initial='', widget=forms.Select(), required=True)
     income = forms.ChoiceField(choices=INCOME, label="", initial='', widget=forms.Select(), required=True)
@@ -12,6 +12,17 @@ class ClientForm(forms.Form):
     federal_tax = forms.ChoiceField(choices=FEDERAL_TAX, label="", initial='', widget=forms.Select(), required=True)
     state_tax = forms.ChoiceField(choices=STATE_TAX, label="", initial='', widget=forms.Select(), required=True)
     # user_id = forms.(widget='HiddenInput')
+    class Meta:
+        model = Client
+        fields = [
+            "age",
+            "marital_status",
+            "income",
+            "saving_rate",
+            "fixed_expenses",
+            "federal_tax",
+            "state_tax"
+            ]
 
 class RiskForm(forms.ModelForm):
     cash_reserves = forms.ChoiceField(choices=CASH_RESERVES, initial='', widget=forms.RadioSelect(), required=True)
