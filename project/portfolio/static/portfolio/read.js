@@ -147,4 +147,20 @@ $(document).ready(function(){
 
     });
 
+    var doc = new jsPDF();
+    var specialElementHandlers = {
+        '.asset-container': function (element, renderer) {
+            return true;
+        }
+    };
+
+    $('#cmd').click(function () {
+        doc.fromHTML($('.asset-container').html(), 15, 15, {
+            'width': 170,
+                'elementHandlers': specialElementHandlers
+        });
+        doc.save('sample-file.pdf');
+        console.log(doc);
+    });
+
 });
