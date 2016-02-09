@@ -5,6 +5,8 @@ urlpatterns = [
 	url(r'^risk$', views.RiskView.as_view(), name="risk"),
 	url(r'^policy$', views.Investment_policyView.as_view(), name="policy"),
 	url(r'^beta_analysis/(?P<id>[A-Za-z0-9-]+)$', views.BetaAnalysisView.as_view(), name="beta_analysis"),
+	url(r'^report_policy$', views.ReportInvestmentPolicy.as_view(), name="report_policy"),
+
 
 
 	]
