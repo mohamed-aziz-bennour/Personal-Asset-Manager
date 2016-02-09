@@ -1,11 +1,10 @@
 import pandas as pd
 import numpy as np
-from pandas_datareader import data, wb
-import datetime
+from pandas_datareader import data
 from datetime import date
 
 
-class Risk:
+class RiskAnalysis:
 
 	def __init__(self):
 		self.start_date = None
@@ -17,16 +16,18 @@ class Risk:
 		self.alpha = None
 	
 	def run_analysis(self, symbol):
-		self.start_date = date(2010,12,31)
-		self.end_date = date(2013,12,31)
+		self.start_date = date(2013,12,31)
+		self.end_date = date(2015,12,31)
 		self.period = 12
-		self.stock_returns = self.calculate_stock_returns(symbol)
 		self.sp_returns = self.calculate_sp_returns()
+		print(type(symbol))
+		self.stock_returns = self.calculate_stock_returns(symbol)
 		self.beta = self.calculate_beta()
 		self.alpha = self.calculate_alpha()
 		return self.risk_report()
 
 	def get_data(self, symbol):
+		print(symbol,'yahoo',self.start_date, self.end_date)
 		stock = data.DataReader(symbol,'yahoo',self.start_date, self.end_date)
 		return stock
 

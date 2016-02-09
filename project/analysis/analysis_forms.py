@@ -4,13 +4,13 @@ from analysis.analysis_choices import *
 
 
 class ClientForm(forms.ModelForm):
-    age = forms.ChoiceField(choices=AGE, label="", initial='', widget=forms.Select(), required=True)
-    marital_status = forms.ChoiceField(choices=MARITAL_STATUS, label="", initial='', widget=forms.Select(), required=True)
-    income = forms.ChoiceField(choices=INCOME, label="", initial='', widget=forms.Select(), required=True)
-    saving_rate = forms.ChoiceField(choices=SAVING_RATE, label="", initial='', widget=forms.Select(), required=True)
-    fixed_expenses = forms.ChoiceField(choices=FIXED_EXPENSES, label="", initial='', widget=forms.Select(), required=True)
-    federal_tax = forms.ChoiceField(choices=FEDERAL_TAX, label="", initial='', widget=forms.Select(), required=True)
-    state_tax = forms.ChoiceField(choices=STATE_TAX, label="", initial='', widget=forms.Select(), required=True)
+    age = forms.ChoiceField(choices=AGE, label="Your age:", initial='', widget=forms.Select(), required=True)
+    marital_status = forms.ChoiceField(choices=MARITAL_STATUS, label="Your martial status: ", initial='', widget=forms.Select(), required=True)
+    income = forms.ChoiceField(choices=INCOME, label="Your income:", initial='', widget=forms.Select(), required=True)
+    saving_rate = forms.ChoiceField(choices=SAVING_RATE, label="What's your saving rate:", initial='', widget=forms.Select(), required=True)
+    fixed_expenses = forms.ChoiceField(choices=FIXED_EXPENSES, label="How much are your fixed expenses? ", initial='', widget=forms.Select(), required=True)
+    federal_tax = forms.ChoiceField(choices=FEDERAL_TAX, label="How much is your federal tax? ", initial='', widget=forms.Select(), required=True)
+    state_tax = forms.ChoiceField(choices=STATE_TAX, label="How much is you state tax?", initial='', widget=forms.Select(), required=True)
     # user_id = forms.(widget='HiddenInput')
     class Meta:
         model = Client

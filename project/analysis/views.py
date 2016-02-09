@@ -4,7 +4,7 @@ from .analysis_models import Client, Risk, Investment_policy
 from .analysis_forms import ClientForm, RiskForm, Investment_policyForm 
 from securities.securities_models import Bond
 from django.http import JsonResponse
-from analysis.utilities.risk_calc import Risk
+from analysis.utilities.risk_calc import RiskAnalysis
 # from analysis.utilities.model_portfolio import ModelPortfolio
 from portfolio.models import Portfolio
 from django.contrib.contenttypes.models import ContentType
@@ -26,8 +26,8 @@ class ClientCreateView(View):
             client = form.save(commit = False)
             client.user = request.user
             client.save()
-            
-            return JsonResponse("saved")
+            return redirect('/analysis/policy')
+            # return JsonResponse("saved")
         else:
             print(form.errors)
             context = dict(form=form,submit_text='Create')
@@ -118,12 +118,14 @@ class BetaAnalysisView(View):
         portfolio_object = Portfolio.objects.get(id=id)
         bond = ContentType.objects.get_for_model(Bond)
         assets = portfolio_object.asset_set.exclude(content_type=bond)
-        risk = Risk()
+        risk = RiskAnalysis()
+        # print(risk)
 
         context = {}
 
         for asset in assets:
            symbol = asset.content_object.symbol
+           print(symbol)
            stock = risk.run_analysis(symbol)
            context[symbol] = stock
            
