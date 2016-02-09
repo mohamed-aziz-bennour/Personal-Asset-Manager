@@ -23,9 +23,13 @@ class ClientCreateView(View):
     def post(self, request):
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            client = form.save()
-            return redirect('analysis:index')
+            client = form.save(commit = False)
+            client.user = request.user
+            client.save()
+            
+            return JsonResponse("saved")
         else:
+            print(form.errors)
             context = dict(form=form,submit_text='Create')
             return render(request, self.template_name, context)
 
@@ -53,12 +57,15 @@ class RiskView(View):
         form = self.form_class(data=request.POST)
         data=request.POST
         if form.is_valid():
+            risk = form.save(commit = False)
             score = int(data.get('cash_reserves')[0]) + int(data.get('time_horizont')[0])
             score += int(data.get('market_loss')[0]) + int(data.get('investment_experience')[0]) 
             score += int(data.get('investment_return')[0])
-            recommendation = ModelPortfolio(score).get_recommendation()
-
-            # risk = form.save()
+            # recommendation = ModelPortfolio(score).get_recommendation()
+            risk.user = request.user
+            risk.score = score
+            risk.save()
+            
             return JsonResponse(recommendation)
         else:
             context = dict(form=form,submit_text='Create')

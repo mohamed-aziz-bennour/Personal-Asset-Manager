@@ -10,8 +10,8 @@ class Client(models.Model):
 	income = models.CharField(max_length=25, choices=INCOME)
 	saving_rate = models.CharField(max_length=25, choices=SAVING_RATE)
 	fixed_expenses = models.CharField(max_length=25, choices=FIXED_EXPENSES)
-	federal_tax = models.DecimalField(max_digits=2, decimal_places=2, choices=FEDERAL_TAX)
-	state_tax = models.DecimalField(max_digits=2, decimal_places=2, choices=STATE_TAX)
+	federal_tax = models.DecimalField(max_digits=10, decimal_places=2, choices=FEDERAL_TAX)
+	state_tax = models.DecimalField(max_digits=10, decimal_places=2, choices=STATE_TAX)
 	user = models.OneToOneField(User)
 
 class Risk(models.Model):
@@ -20,6 +20,7 @@ class Risk(models.Model):
 	market_loss = models.IntegerField(choices=MARKET_LOSS)
 	investment_experience = models.IntegerField(choices=INVESTMENT_EXPERIENCE)
 	investment_return = models.IntegerField(choices=INVESTMENT_RETURN)
+	score = models.IntegerField(default = 0)
 	user = models.OneToOneField(User)
 
 class Investment_policy(models.Model):
