@@ -5,7 +5,7 @@ from users.models import Profile
 from .analysis_forms import ClientForm, RiskForm, Investment_policyForm 
 from securities.securities_models import Bond
 from django.http import JsonResponse
-from analysis.utilities.risk_calc import RiskAnalysis,  Analysis_portfolio
+from analysis.utilities.risk_calc import RiskAnalysis,  Analysis_portfolio, ModelPortfolio
 # from analysis.utilities.model_portfolio import ModelPortfolio
 from portfolio.models import Portfolio, Asset
 from django.contrib.contenttypes.models import ContentType
@@ -127,6 +127,30 @@ class ReportInvestmentPolicy(View):
         return report(request)
         # Create the HttpResponse object with the appropriate PDF headers.
         
+class Compare_with_model(View): 
+    template_name = "analysis/compare.html"
+
+    def get(self,request,id):
+
+
+        portfolio = Portfolio.objects.get(id=id)
+        print(id)
+        print(portfolio.user.id)
+        model = ModelPortfolio()
+        model_id = model.recommended_portfolio(request,portfolio.user)
+        id_model = model_id
+        print(id)
+        print(id_model)
+        analysis = Analysis_portfolio()
+        context1 = analysis.anlaysis_portfolio(id)
+        context2 = analysis.anlaysis_portfolio(id_model)
+        context = dict(owen = context1, model = context2)
+        print(context)
+        return render(request, self.template_name, context) 
+
+
+
+
 
 
 

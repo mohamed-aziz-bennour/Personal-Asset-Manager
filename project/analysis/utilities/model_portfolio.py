@@ -1,29 +1,29 @@
 from portfolio.models import Portfolio
 
 
-# class ModelPortfolio:
+class ModelPortfolio:
 
-# 	def __init__(self, score):
-# 		self.score = score
+	def __init__(self, score):
+		self.score = score
 
-# 	def recommended_portfolio(self):
+	def recommended_portfolio(self):
 
-# 		if self.score in [16, 17, 18, 19, 20]:
-# 			return_portfolio = Portfolio.objects.get(id=1)
-# 			# return "agressive"
+		if self.score in [16, 17, 18, 19, 20]:
+			return_portfolio = 1
+			# return "agre1ssive"
 
-# 		elif self.score in [11, 12, 13, 14, 15]:
-# 			return_portfolio = Portfolio.objects.get(id=2)	
-# 			# return "moderatly_aggressive"
+		elif self.score in [11, 12, 13, 14, 15]:
+			return_portfolio = 2
+			# return "moderatly_aggressive"
 
-# 		elif self.score in [6, 7, 8, 9, 10]:
-# 			return_portfolio = Portfolio.objects.get(id=3)
-# 			# return "moderate"
+		elif self.score in [6, 7, 8, 9, 10]:
+			return_portfolio = 3
+			# return "moderate"
 
-# 		else:
-# 			return_portfolio = Portfolio.objects.get(id=4)
-# 			# return "conservative"
-# 		return return_portfolio
+		else:
+			return_portfolio = 4
+			# return "conservative"
+		return return_portfolio
 
 	
 # 	def call_text(self, portfolio_id):

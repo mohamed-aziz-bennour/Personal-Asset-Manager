@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Analysis on portfolio</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1>Analyse on portfolio: {{model.portfolio.portfolio_name}} </h1>
+	
+	<table class="table table-striped">
+		<th>
+							<td>    Total value</td>
+                            <td>    weight</td>
+                            <td>    Quantity</td>
+                            <td>    cost_basis</td>
+                            <td>    Asset Type  </td>
+                            
+                            <td>    Symbol </td>
+                            <td>    beta </td>
+                            <td>    alpha </td>
+                            <td>    r_squared</td>
+                           
+		</th>
+		{% for res in model.response %}
+				<tr>
+							<td>    {{res.id}}</td>
+                            <td>    ${{res.value}}</td>
+                            <td>    % {{res.weight}}</td>
+                            <td>    {{res.quantity}}</td>
+                            <td>    ${{res.cost_basis}}</td>
+                            <td>    {{res.content_type}}  </td>
+                            
+                            <td>    {{res.content_object.symbol}} </td>
+                            <td>    {{res.analysis.beta}}  </td>
+                            <td>    {{res.analysis.alpha}} </td>
+                            <td>    {{res.analysis.r_squared}}</td>
+                            
+
+				</tr>
+		{% endfor %}
+  				<tr class="info">
+  							<td>     {{model.portfolio.portfolio_name}} </td>
+  							<td>   Total Value: $  {{model.total.portfolio_value}}  </td>
+  							<td>    Beta: {{model.total.beta}}  </td>
+                            <td>    Alpha: {{model.total.alpha}} </td>
+                            <td>    R Squared: {{model.total.r_squared}} </td>
+  					 		
+                   
+  				</tr>
+	</table>
+
+
+		<h1>Analyse on portfolio: {{owen.portfolio.portfolio_name}} </h1>
+	
+	<table class="table table-striped">
+		<th>
+							<td>    Total value</td>
+                            <td>    weight</td>
+                            <td>    Quantity</td>
+                            <td>    cost_basis</td>
+                            <td>    Asset Type  </td>
+                            
+                            <td>    Symbol </td>
+                            <td>    beta </td>
+                            <td>    alpha </td>
+                            <td>    r_squared</td>
+                           
+		</th>
+		{% for res in owen.response %}
+				<tr>
+							<td>    {{res.id}}</td>
+                            <td>    ${{res.value}}</td>
+                            <td>    % {{res.weight}}</td>
+                            <td>    {{res.quantity}}</td>
+                            <td>    ${{res.cost_basis}}</td>
+                            <td>    {{res.content_type}}  </td>
+                            
+                            <td>    {{res.content_object.symbol}} </td>
+                            <td>    {{res.analysis.beta}}  </td>
+                            <td>    {{res.analysis.alpha}} </td>
+                            <td>    {{res.analysis.r_squared}}</td>
+                            
+
+				</tr>
+		{% endfor %}
+  				<tr class="info">
+  							<td>     {{owen.portfolio.portfolio_name}} </td>
+  							<td>   Total Value: $  {{owen.total.portfolio_value}}  </td>
+  							<td>    Beta: {{owen.total.beta}}  </td>
+                            <td>    Alpha: {{owen.total.alpha}} </td>
+                            <td>    R Squared: {{owen.total.r_squared}} </td>
+  					 		
+                   
+  				</tr>
+	</table>
+
+
+
+
+</body>
+</html>

@@ -3,6 +3,7 @@ import numpy as np
 from pandas_datareader import data
 from datetime import date
 from portfolio.models import Portfolio, Asset
+from analysis.analysis_models import Risk
 
 
 class RiskAnalysis:
@@ -160,6 +161,32 @@ class Analysis_portfolio():
          
         # return JsonResponse({'response':assets,'total':totals,'portfolio':portfolio_object.to_json()})
         return dict(response = assets ,total = totals ,portfolio = portfolio_object.to_json())
+
+
+
+class ModelPortfolio:
+
+
+    def recommended_portfolio(self,request,user):
+
+        risk = Risk.objects.get(user=user)
+        score = risk.score
+        if score in [16, 17, 18, 19, 20]:
+            return_portfolio = 1
+            # return "agre1ssive"
+
+        elif score in [11, 12, 13, 14, 15]:
+            return_portfolio = 2
+            # return "moderatly_aggressive"
+
+        elif score in [6, 7, 8, 9, 10]:
+            return_portfolio = 3
+            # return "moderate"
+
+        else:
+            return_portfolio = 4
+            # return "conservative"
+        return return_portfolio
 
 
 
