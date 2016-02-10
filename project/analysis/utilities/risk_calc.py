@@ -96,9 +96,9 @@ class RiskAnalysis:
 		annualized_alpha = self.annualized_alpha()
 		r_squared = self.calculate_r_squared()
 		volatility = self.calculate_volatility()
-		risk_report = {'beta':beta, 
-						'alpha':annualized_alpha, 
-						'r_squared':r_squared,
+		risk_report = {'beta':round(beta,2), 
+						'alpha': round(annualized_alpha * 100,2), 
+						'r_squared':round(r_squared,2),
 						'volatility':volatility}
 		return risk_report
 
