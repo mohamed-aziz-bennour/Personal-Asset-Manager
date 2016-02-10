@@ -19,17 +19,20 @@ class RiskAnalysis:
 		self.start_date = date(2013,12,31)
 		self.end_date = date(2015,12,31)
 		self.period = 12
-		self.sp_returns = self.calculate_sp_returns()
-		print(type(symbol))
 		self.stock_returns = self.calculate_stock_returns(symbol)
+
+		self.sp_returns = self.calculate_sp_returns()
 		self.beta = self.calculate_beta()
 		self.alpha = self.calculate_alpha()
 		return self.risk_report()
 
 	def get_data(self, symbol):
-		print(symbol,'yahoo',self.start_date, self.end_date)
 		stock = data.DataReader(symbol,'yahoo',self.start_date, self.end_date)
 		return stock
+
+	def adjust_date_range(self, stock):
+		self.start_date = stock.index.min().date()	
+		self.end_date = stock.index.max().date()
 
 	def get_sp_data(self):
 		sp = data.DataReader('^GSPC','yahoo',self.start_date, self.end_date)
@@ -38,6 +41,8 @@ class RiskAnalysis:
 
 	def calculate_stock_returns(self, symbol):
 		stock = self.get_data(symbol)
+		self.adjust_date_range(stock)
+
 		data = pd.DataFrame({'stock_adj_close':stock['Adj Close']}, index=stock.index)
 		data[['stock_returns']] = data[['stock_adj_close']]/data[['stock_adj_close']].shift(1)-1 
 		stock_return = data.dropna()
@@ -95,7 +100,6 @@ class RiskAnalysis:
 						'alpha':annualized_alpha, 
 						'r_squared':r_squared,
 						'volatility':volatility}
-		print(risk_report)
 		return risk_report
 
 
