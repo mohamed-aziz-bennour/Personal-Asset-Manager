@@ -41,7 +41,7 @@ class Asset(models.Model):
             content_type = str(self.content_type),
             object_id = str(self.object_id), 
             value = value,
-            weight = '%' + str( round(value * 100 / portfolio_value,2))
+            weight =  value * 100 / portfolio_value
 
         )
 
