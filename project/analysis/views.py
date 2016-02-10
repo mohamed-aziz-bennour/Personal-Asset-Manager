@@ -5,7 +5,7 @@ from users.models import Profile
 from .analysis_forms import ClientForm, RiskForm, Investment_policyForm 
 from securities.securities_models import Bond
 from django.http import JsonResponse
-from analysis.utilities.risk_calc import RiskAnalysis
+from analysis.utilities.risk_calc import RiskAnalysis,  Analysis_portfolio
 # from analysis.utilities.model_portfolio import ModelPortfolio
 from portfolio.models import Portfolio, Asset
 from django.contrib.contenttypes.models import ContentType
@@ -118,61 +118,8 @@ class BetaAnalysisView(View):
     template_name = 'analysis/analysis.html'
 
     def get(self,request,id):
-        portfolio_object = Portfolio.objects.get(id=id)
-        bond = ContentType.objects.get_for_model(Bond)
-
-        assets= Asset.objects.raw('''SELECT *, cost_basis * quantity as value 
-            FROM portfolio_asset
-            WHERE portfolio_asset.portfolio_id = %s ''',(id,))
-        # print(assets)
-        portfolio_value = 0 
-        for asset in assets:
-            portfolio_value += asset.value
-        
-        assets = [ asset.to_json(asset.value,portfolio_value)for asset in assets ]
-
-        # assets = portfolio_object.asset_set.exclude(content_type=bond)
-
-        print(assets)
-        risk = RiskAnalysis()
-        # print(risk)
-
-        context = {}
-        alpha = 0
-        beta = 0
-        r_squared = 0 
-        for asset in assets:
-            if asset["content_type"] != "bond":
-               symbol = asset["content_object"]["symbol"]
-               print(symbol)
-               stock = risk.run_analysis(symbol)
-            else:
-               stock  = {'beta':0, 
-                        'alpha':0, 
-                        'r_squared':0,
-                        'volatility':0}
-            # context[symbol] = stock
-            asset['analysis']=stock
-            asset['analysis_total'] = {'beta':round(stock["beta"] * asset['weight'] /100,2), 
-                                      'alpha':round(stock["alpha"] * asset['weight'] /100,2), 
-                                      'r_squared':round(stock["r_squared"] * asset['weight'] / 100,2)
-                                        }
-            alpha += stock["alpha"] * asset['weight'] /100
-            beta += stock["beta"] * asset['weight'] /100
-            r_squared += stock["r_squared"] * asset['weight'] / 100 
-            asset['weight'] =  round (asset['weight'],2)
-
-
-        totals = {'portfolio_value' :portfolio_value,
-                    'alpha': round(alpha,2), 
-                    'beta' : round(beta,2),
-                    'r_squared' : round(r_squared,2)
-
-                    }
-
-         
-        # return JsonResponse({'response':assets,'total':totals,'portfolio':portfolio_object.to_json()})
-        context = dict(response = assets ,total = totals ,portfolio = portfolio_object.to_json())
+        analysis = Analysis_portfolio()
+        context = analysis.anlaysis_portfolio(id)
         return render(request, self.template_name, context) 
 
 class ReportInvestmentPolicy(View):
