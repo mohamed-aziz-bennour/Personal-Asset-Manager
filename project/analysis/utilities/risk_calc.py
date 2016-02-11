@@ -124,18 +124,25 @@ class Analysis_portfolio():
         print(assets)
         risk = RiskAnalysis()
         # print(risk)
-
+        stock_value = 0 
+        bond_value = 0 
+        etf_value  = 0 
         context = {}
         alpha = 0
         beta = 0
         r_squared = 0 
         for asset in assets:
             if asset["content_type"] != "bond":
-               symbol = asset["content_object"]["symbol"]
-               print(symbol)
-               stock = risk.run_analysis(symbol)
+                symbol = asset["content_object"]["symbol"]
+                print(asset["content_type"])
+                stock = risk.run_analysis(symbol)
+                if asset["content_type"] == "stock":
+                    stock_value += asset['value']
+                else:
+                    etf_value += asset['value']
             else:
-               stock  = {'beta':0, 
+                bond_value +=  asset['value']
+                stock  = {'beta':0, 
                         'alpha':0, 
                         'r_squared':0,
                         'volatility':0}
@@ -154,9 +161,12 @@ class Analysis_portfolio():
         totals = {'portfolio_value' :portfolio_value,
                     'alpha': round(alpha,2), 
                     'beta' : round(beta,2),
-                    'r_squared' : round(r_squared,2)
-
+                    'r_squared' : round(r_squared,2),
+                    'stock_value':  int(stock_value / portfolio_value * 100 ),
+                    'etf_value':  int(etf_value  / portfolio_value * 100) ,
+                    'bond_value':  int(bond_value  / portfolio_value * 100 )
                     }
+
 
          
         # return JsonResponse({'response':assets,'total':totals,'portfolio':portfolio_object.to_json()})
