@@ -20,10 +20,16 @@ from analysis import urls as analysis_urls
 from portfolio import urls as portfolio_urls
 from securities import urls as securities_urls
 
+# ***************
+# REMOVE
+from django.shortcuts import render
+def demo(request): return render(request, "index.html")
+# *************** 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include(users_urls, namespace="users")),
+    url(r'^demo' , demo),
+    # url(r'^', include(users_urls, namespace="users")),
     url(r'^users/', include(users_urls, namespace="users")),
     url(r'^analysis/', include(analysis_urls, namespace='analysis')),
     url(r'^portfolio/', include(portfolio_urls, namespace='portfolio')),

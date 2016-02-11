@@ -13,7 +13,7 @@ from .reporting_policy import report
 
 
 class ClientCreateView(View):
-    template_name = 'analysis/index.html'
+    template_name = 'dashboard.html'
     model = Client
     form_class = ClientForm
     context = None
@@ -46,7 +46,7 @@ class ClientCreateView(View):
 
 
 class RiskView(View):
-    template_name = 'analysis/index.html'
+    template_name = 'dashboard.html'
     model = Risk
     form_class = RiskForm
     context = None
