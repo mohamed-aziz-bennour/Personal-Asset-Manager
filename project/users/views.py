@@ -98,9 +98,9 @@ class CreateUser(View):
         return render(request, self.template_name, self.context)
 
 class LoginUser(View):
-    template_name = "users/user_form.html"
+    template_name = "users/landing_page.html"
     form_class = AuthenticationForm
-    success_url = "users:welcome"
+    success_url = "portfolio:dashboard"
     context = None
 
     def get(self, request):
@@ -157,9 +157,9 @@ class LoginUser(View):
         return render(request, self.template_name, self.context)
 
 class UpdateUser(LoginRequiredMixin, View):
-    template_name = "users/user_form.html"
+    template_name = "dashboard.html"
     form_class = UserForm
-    success_url = "users:welcome"
+    success_url = "portfolio:dashboard"
     context = None
 
     def get(self, request):
@@ -190,9 +190,9 @@ class UpdateUser(LoginRequiredMixin, View):
         return render(request, self.template_name, self.context)
 
 class ChangePassword(LoginRequiredMixin, View):
-    template_name = "users/user_form.html"
+    template_name = "dashboard.html"
     form_class = PasswordChangeForm
-    success_url = "users:welcome"
+    success_url = "portfolio:dashboard"
     context = None
 
     def get(self, request):
@@ -229,9 +229,9 @@ class ChangePassword(LoginRequiredMixin, View):
         return render(request, self.template_name, self.context)
 
 class ChangePhone(LoginRequiredMixin, View):
-    template_name = "users/user_form.html"
+    template_name = "dashboard.html"
     form_class = ChangePhoneForm
-    success_url = "users:welcome"
+    success_url = "portfolio:dashboard"
     context = None
 
     def get(self, request):

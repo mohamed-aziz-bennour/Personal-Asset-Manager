@@ -17,6 +17,7 @@ from django.conf.urls import url
 from . import views
 urlpatterns = [
     # url(r'^$', views.Index.as_view(), name="index"),
+    url(r'^$', views.Index.as_view(), name="dashboard"),
     url(r'^create$', views.CreatePortfolio.as_view(), name="create"),
     url(r'^show_list$', views.ShowPortfolio.as_view(), name="show_list"),
     url(r'^delete/(?P<id>[A-Za-z0-9-]+)$', views.DeletePortfolio.as_view(),

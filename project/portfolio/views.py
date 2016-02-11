@@ -13,7 +13,11 @@ from django.views.generic import DetailView
 
 
 
-# Create your views here.
+class Index(LoginRequiredMixin,View):
+    template_name = "dashboard.html"
+
+    def get(self, request):
+        return render(request, self.template_name) 
 
 class CreatePortfolio(LoginRequiredMixin,View):
     template_name = "portfolio/portfolio_form.html"
