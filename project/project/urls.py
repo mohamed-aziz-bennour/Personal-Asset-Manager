@@ -23,7 +23,7 @@ from securities import urls as securities_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^$|^users/$', index, name="landing-page"),
+    url(r'^', include(users_urls, namespace="users")),
     url(r'^users/', include(users_urls, namespace="users")),
     url(r'^analysis/', include(analysis_urls, namespace='analysis')),
     url(r'^portfolio/', include(portfolio_urls, namespace='portfolio')),
