@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+
 <html lang="en">
 <head>
     <title>Analysis on portfolio</title>
@@ -48,12 +50,19 @@
   							<td>    Beta: {{total.beta}}  </td>
                             <td>    Alpha: {{total.alpha}} </td>
                             <td>    R Squared: {{total.r_squared}} </td>
-  					 		
+  					 		<td>    Stock Value: % {{total.stock_value}}  </td>
+                            <td>    Bond Value: % {{total.bond_value}} </td>
+                            <td>    ETF Value: % {{total.etf_value}} </td>
                    
   				</tr>
 	</table>
-
-
-
+		<input id="stock_value" value="{{total.stock_value}}" hidden>
+        <input id="bond_value" value="{{total.bond_value}}" hidden>
+        <input id="etf_value" value="{{total.etf_value}}" hidden>
+		<center ><div id="chart"></div></center>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
+		<script src="d3pie.min.js"></script>
+		<script src="{% static 'analysis/pie.js' %}" type="application/javascript"></script>
 </body>
 </html>
