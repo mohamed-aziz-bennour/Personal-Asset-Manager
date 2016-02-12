@@ -1,6 +1,7 @@
 from django import forms
 from analysis.analysis_models import Client, Risk, Investment_policy
 from analysis.analysis_choices import *
+from analysis.labels import *
 
 
 class ClientForm(forms.ModelForm):
@@ -25,11 +26,11 @@ class ClientForm(forms.ModelForm):
             ]
 
 class RiskForm(forms.ModelForm):
-    cash_reserves = forms.ChoiceField(choices=CASH_RESERVES, initial='', widget=forms.RadioSelect(), required=True)
-    time_horizont = forms.ChoiceField(choices=TIME_HORIZONT, initial='', widget=forms.RadioSelect(), required=True)
-    market_loss = forms.ChoiceField(choices=MARKET_LOSS, initial='', widget=forms.RadioSelect(), required=True)
-    investment_experience = forms.ChoiceField(choices=INVESTMENT_EXPERIENCE, initial='', widget=forms.RadioSelect(), required=True)
-    investment_return = forms.ChoiceField(choices=INVESTMENT_RETURN, initial='', widget=forms.RadioSelect(), required=True)
+    cash_reserves = forms.ChoiceField(label=cash_reserves, choices=CASH_RESERVES, widget=forms.RadioSelect, required=True)
+    time_horizont = forms.ChoiceField(label=time_horizont, choices=TIME_HORIZONT, widget=forms.RadioSelect, required=True)
+    market_loss = forms.ChoiceField(label=market_loss, choices=MARKET_LOSS, widget=forms.RadioSelect, required=True)
+    investment_experience = forms.ChoiceField(label=investment_experience, choices=INVESTMENT_EXPERIENCE, widget=forms.RadioSelect, required=True)
+    investment_return = forms.ChoiceField(label=investment_return, choices=INVESTMENT_RETURN, widget=forms.RadioSelect, required=True)
     # user_id = models.(widget='HiddenInput')
     class Meta:
         model = Risk
@@ -42,13 +43,13 @@ class RiskForm(forms.ModelForm):
             ]
 
 class Investment_policyForm(forms.ModelForm):
-    time_retirement = forms.ChoiceField(choices=TIME_RETIREMENT, initial='', widget=forms.RadioSelect(), required=True)
-    liquidity_needs = forms.ChoiceField(choices=LIQIDITY_NEEDS, initial='', widget=forms.RadioSelect(), required=True)
-    goal_short = forms.ChoiceField(choices=GOAL_SHORT, initial='', widget=forms.RadioSelect(), required=True)
-    goal_mid = forms.ChoiceField(choices=GOAL_MID, initial='', widget=forms.RadioSelect(), required=True)
-    goal_long = forms.ChoiceField(choices=GOAL_LONG, initial='', widget=forms.RadioSelect(), required=True)
-    expected_return = forms.DecimalField()
-    expected_inflation = forms.DecimalField()
+    time_retirement = forms.ChoiceField(label=time_retirement, choices=TIME_RETIREMENT, widget=forms.RadioSelect, required=True)
+    liquidity_needs = forms.ChoiceField(label=liquidity_needs, choices=LIQIDITY_NEEDS, widget=forms.RadioSelect, required=True)
+    goal_short = forms.ChoiceField(label=goal_short, choices=GOAL_SHORT, widget=forms.RadioSelect, required=True)
+    goal_mid = forms.ChoiceField(label=goal_mid, choices=GOAL_MID, widget=forms.RadioSelect, required=True)
+    goal_long = forms.ChoiceField(label=goal_long, choices=GOAL_LONG, widget=forms.RadioSelect, required=True)
+    expected_return = forms.DecimalField(label=expected_return)
+    expected_inflation = forms.DecimalField(label=expected_inflation)
     # user_id = models(widget='HiddenInput')
     class Meta:
         model = Investment_policy

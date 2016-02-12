@@ -29,7 +29,7 @@ def demo(request): return render(request, "index.html")
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^demo' , demo),
-    # url(r'^', include(users_urls, namespace="users")),
+    url(r'^', include(users_urls, namespace="users")),
     url(r'^users/', include(users_urls, namespace="users")),
     url(r'^analysis/', include(analysis_urls, namespace='analysis')),
     url(r'^portfolio/', include(portfolio_urls, namespace='portfolio')),
