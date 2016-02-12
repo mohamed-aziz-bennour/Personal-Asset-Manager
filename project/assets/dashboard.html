@@ -266,7 +266,7 @@
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="{% url "analysis:policy" %}" class="small-box-footer">Define your goals <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{% url "analysis:analysis" %}" class="small-box-footer">Define your goals <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -304,9 +304,8 @@
               <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-                  <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Form</a></li>
+                  <li class="pull-left header"><i class="fa fa-inbox"></i></li>
                 </ul>
                 <div class="tab-content">
                   <!-- Morris chart - Sales -->
@@ -325,15 +324,28 @@
                     {% endfor %}
                     <input type="submit" value="{{submit_text}}">
                   </form>
-                  {% else %}
-                  
-                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                    
-                  </div>
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                    
-                  </div>
+                  {% elif risk_form %}
+                    <!-- checkbox -->
+                  <form role="form"  action="{% url action %}" method="{{method}}">
+                  {% csrf_token %}
+                  {{risk_form}}
+                   <input type="submit" class="btn btn-danger"  value="{{submit_text}}">
+                  </form>
+
+                  {% elif client_form %}
+                  <form role="form"  action="{% url action %}" method="{{method}}">
+                  {% csrf_token %}
+                  {{client_form}}
+                   <input type="submit" class="btn btn-danger" value="{{submit_text}}">
+                  </form>
+                  {% elif investment_form %}
+                  <form role="form"  action="{% url action %}" method="{{method}}">
+                  {% csrf_token %}
+                  {{investment_form}}
+                   <input type="submit" class="btn btn-danger" value="{{submit_text}}">
+                  </form>
                   {% endif %}
+                  
                 </div>
               </div><!-- /.nav-tabs-custom -->
 

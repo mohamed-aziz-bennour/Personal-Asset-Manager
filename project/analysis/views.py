@@ -29,6 +29,9 @@ class ClientCreateView(View):
             client = form.save(commit = False)
             client.user = request.user
             client.save()
+            # i = Investment_policyView(View)
+            # context = i.get_context(Investment_policyForm())
+            # return render(request, self.template_name, context)
             return redirect('/analysis/policy')
             # return JsonResponse("saved")
         else:
@@ -38,7 +41,7 @@ class ClientCreateView(View):
 
     def get_context(self, form):
         return {
-            "form": form,
+            "client_form": form,
             "action": "analysis:analysis",
             "method": "POST",
             "submit_text": "Create Client"
@@ -76,14 +79,14 @@ class RiskView(View):
 
     def get_context(self, form):
         return {
-            "form": form,
+            "risk_form": form,
             "action": "analysis:risk",
             "method": "POST",
             "submit_text": "Submit Risk Form"
         }
 
 class Investment_policyView(View):
-    template_name = 'analysis/index.html'
+    template_name = 'dashboard.html'
     model = Investment_policy
     form_class = Investment_policyForm
     context = None
@@ -99,14 +102,14 @@ class Investment_policyView(View):
             investment_policy = form.save(commit = False)
             investment_policy.user = request.user 
             investment_policy.save()
-            return render(request, "users/welcome.html")
+            return render(request, self.template_name)
         # What do you want to do with this
         print(form.errors)
         return JsonResponse({'result': 'failed'})
 
     def get_context(self, form):
         return {
-            "form": form,
+            "investment_form": form,
             "action": "analysis:policy",
             "method": "POST",
             "submit_text": "Submit Policy Form"
