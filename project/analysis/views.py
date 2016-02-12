@@ -44,7 +44,7 @@ class ClientCreateView(View):
             "client_form": form,
             "action": "analysis:analysis",
             "method": "POST",
-            "submit_text": "Create Client"
+            "submit_text": "Create Risk Profile"
         }
 
 
@@ -56,7 +56,7 @@ class RiskView(View):
 
     def get(self, request):
         form = self.form_class()
-        self.context = self.get_context(form)
+        self.context = self.get_context(form, request.GET.get('next'))
         return render(request, self.template_name, self.context)
 
     def post(self, request):
@@ -71,16 +71,19 @@ class RiskView(View):
             risk.user = request.user
             risk.score = score
             risk.save()
-            
+            if request.GET.get('next'):
+                redirect(request.GET.get('next'))
             return render(request, self.template_name)
         else:
             context = dict(form=form,submit_text='Create')
+
             return render(request, self.template_name, context)
 
-    def get_context(self, form):
+    def get_context(self, form, next_=''):
         return {
             "risk_form": form,
             "action": "analysis:risk",
+            "DOUBLE_BONUS": '?next='+ next_,
             "method": "POST",
             "submit_text": "Submit Risk Form"
         }
@@ -135,7 +138,8 @@ class Compare_with_model(View):
 
     def get(self,request,id):
 
-
+        if not hasattr(request.user,'risk'):
+            return redirect('/analysis/risk?next=/analysis/compare/{}'.format(id))
         portfolio = Portfolio.objects.get(id=id)
         print(id)
         print(portfolio.user.id)

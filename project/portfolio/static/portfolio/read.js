@@ -170,7 +170,7 @@ $(document).ready(function(){
     })
     $('body').on('click','.view_dash_compare', function(event){
         event.preventDefault();
-        $('.tab-content').load("/analysis/compare/"+$(this).data("portfolio_id"));
+        $('.tab-content').load("/analysis/compare/"+$(this).data("portfolio_id")+" .tab-content");
     })
     
 

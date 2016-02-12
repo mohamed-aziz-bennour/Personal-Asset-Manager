@@ -276,7 +276,7 @@
   
                   {% elif risk_form %}
                     <!-- checkbox -->
-                  <form role="form"  action="{% url action %}" method="{{method}}">
+                  <form role="form"  action="{% url action %}{{DOUBLE_BONUS}}" method="{{method}}">
                   {% csrf_token %}
                   {{risk_form}}
                    <input type="submit" class="btn btn-danger"  value="{{submit_text}}">
@@ -285,7 +285,7 @@
                   {% elif client_form %}
                   <form role="form"  action="{% url action %}" method="{{method}}">
                   {% csrf_token %}
-                  {{client_form}}
+                  {{client_form.as_p}}
                    <input type="submit" class="btn btn-danger" value="{{submit_text}}">
                   </form>
                   {% elif investment_form %}

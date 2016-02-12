@@ -15,9 +15,12 @@ class RiskAnalysis:
         self.symbol = ''
         self.stock_returns = None
         self.sp_returns = None
+        self.RAW_STOCK_RETURNS = None
+        self.RAW_SP_RETURNS = None
         self.beta = None
         self.alpha = None
-    
+        self.get_data_raw_sp()
+
     def run_analysis(self, symbol):
         self.start_date = date(2014,12,31)
         self.end_date = date(2015,12,31)
@@ -31,41 +34,43 @@ class RiskAnalysis:
         self.alpha = self.calculate_alpha()
         return self.risk_report()
 
-    def get_data_stock(self):
-        self.stock_returns = data.DataReader(self.symbol,'yahoo',self.start_date, self.end_date)
+    def get_data_raw_stock(self):
+        self.RAW_STOCK_RETURNS = data.DataReader(self.symbol, 'yahoo', self.start_date, self.end_date)
 
-    def get_data_sp(self):
-        self.sp_returns = data.DataReader('^GSPC','yahoo',self.start_date, self.end_date)
+    def get_data_raw_sp(self):
+        self.RAW_SP_RETURNS = data.DataReader('^GSPC', 'yahoo', self.start_date, self.end_date)
 
     def calculate_returns(self):
-        self.get_data_stock()
-        self.get_data_sp()
-        new_index = self.sp_returns.index.intersection(self.stock_returns.index)
-        self.stock_returns = pd.DataFrame(data={'stock_adj_close':self.stock_returns['Adj Close']},index=new_index)
-        self.sp_returns = pd.DataFrame(data={'sp_adj_close':self.sp_returns['Adj Close']}, index=new_index)
+        self.get_data_raw_stock()
+        new_index = self.RAW_SP_RETURNS.index.intersection(self.RAW_STOCK_RETURNS.index)
+        self.stock_returns = pd.DataFrame(data={'stock_adj_close':self.RAW_STOCK_RETURNS['Adj Close']},index=new_index)
+        self.sp_returns = pd.DataFrame(data={'sp_adj_close':self.RAW_SP_RETURNS['Adj Close']}, index=new_index)
         self.calculate_stock_returns()
         self.calculate_sp_returns()
 
     def calculate_stock_returns(self):
         self.stock_returns[['stock_returns']] = self.stock_returns[['stock_adj_close']]/self.stock_returns[['stock_adj_close']].shift(1)-1 
-        self.stock_return = self.stock_returns.dropna()
+        self.stock_returns = self.stock_returns.dropna()
     
     def calculate_sp_returns(self):
         self.sp_returns[['sp_returns']] = self.sp_returns[['sp_adj_close']]/self.sp_returns[['sp_adj_close']].shift(1)-1 
-        self.sp_return = self.sp_returns.dropna()
+        self.sp_returns = self.sp_returns.dropna()
 
 
     def compute_covariance(self):
         covariance = np.cov(self.stock_returns['stock_returns'], self.sp_returns['sp_returns'])
+        # print(covariance)
         return covariance
 
     def calculate_beta(self):
         covariance = self.compute_covariance()
+        # print('covariance:',covariance)
         beta = covariance[0,1]/covariance[1,1]
+        # print('beta:', beta)
         return beta
 
     def calculate_alpha(self):
-        alpha = np.mean(self.stock_returns['stock_returns'])-self.beta*np.mean(self.sp_returns['sp_returns'])
+        alpha = np.mean(self.stock_returns['stock_returns']) - self.beta * np.mean(self.sp_returns['sp_returns'])
         return alpha
         
     def annualized_alpha(self):
@@ -74,7 +79,7 @@ class RiskAnalysis:
 
     def calculate_r_squared(self):
         covariance = self.compute_covariance()
-        ypred = self.alpha+self.beta*self.sp_returns['sp_returns']
+        ypred = self.alpha + self.beta * self.sp_returns['sp_returns']
         ss_res = np.sum(np.power(ypred-self.stock_returns['stock_returns'],2))
         ss_tot = covariance[0,0]*(len(self.stock_returns)-1)
         r_squared = 1.-ss_res/ss_tot
@@ -114,11 +119,11 @@ class Analysis_portfolio():
         for asset in assets:
             portfolio_value += asset.value
         
-        assets = [ asset.to_json(asset.value,portfolio_value)for asset in assets ]
+        assets = [ asset.to_json(asset.value,portfolio_value) for asset in assets ]
 
         # assets = portfolio_object.asset_set.exclude(content_type=bond)
 
-        print(assets)
+        # print(assets)
         risk = RiskAnalysis()
         # print(risk)
         stock_value = 0 
@@ -131,8 +136,12 @@ class Analysis_portfolio():
         for asset in assets:
             if asset["content_type"] != "bond":
                 symbol = asset["content_object"]["symbol"]
-                print(asset["content_type"])
+                # print(asset["content_type"])
                 stock = risk.run_analysis(symbol)
+                # print(stock)
+                print('*'*100)
+                print(symbol,stock)
+                print('*'*100)
                 if asset["content_type"] == "stock":
                     stock_value += asset['value']
                 else:
@@ -165,7 +174,7 @@ class Analysis_portfolio():
                     }
 
 
-         
+        print(totals)         
         # return JsonResponse({'response':assets,'total':totals,'portfolio':portfolio_object.to_json()})
         return dict(response = assets ,total = totals ,portfolio = portfolio_object.to_json())
 
