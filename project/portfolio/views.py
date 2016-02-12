@@ -16,8 +16,8 @@ from django.views.generic import DetailView
 class Index(LoginRequiredMixin,View):
     template_name = "dashboard.html"
 
-    def get(self, request):
-        return render(request, self.template_name) 
+    def get(self, request): 
+        return render(request, self.template_name,{'portfolio_view':  True} ) 
 
 class CreatePortfolio(LoginRequiredMixin,View):
     template_name = "portfolio/portfolio_form.html"
@@ -63,14 +63,13 @@ class ShowPortfolio(LoginRequiredMixin,View):
     
     def get(self,request):
         portfolios = Portfolio.objects.filter(user=request.user)
-        print(dir(request))
         if request.is_ajax():
             portfolios = [portfolio.to_json() for portfolio in portfolios]
             return JsonResponse({'portfolios':portfolios})
 
 
-        return render(request, 'portfolio/list_portfolio.html',
-         {'portfolios':portfolios}
+        return render(request, 'dashboard.html',
+         {'portfolio_view':True}
          )
 
     def post(self,request):

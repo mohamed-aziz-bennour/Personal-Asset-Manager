@@ -1,18 +1,21 @@
-<!DOCTYPE html>
+
 {% load staticfiles %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Portfolio</title>
 
-</head>
 <body>
     <div class="header">
         <h2 class="heading">{{portfolio.portfolio_name}}</h2>
+
         <button><a href="{% url 'portfolio:show_list' %}">list portfolios</a></button>
-        <button><a href="{% url 'analysis:beta_analysis' id=portfolio.id %}">Run analysis</a></button>
-        <button><a href="{% url 'analysis:compare' id=portfolio.id %}">Compare</a></button>
+        
+            <a class="btn btn-info view_dash_analysis"
+             data-portfolio_id="{{portfolio.id}}"
+             href="{% url 'analysis:beta_analysis' id=portfolio.id %}">
+             Run analysis</a>
+        <a class="btn btn-info view_dash_compare"
+             data-portfolio_id="{{portfolio.id}}"
+            href="{% url 'analysis:compare' id=portfolio.id %}">
+            Compare</a>
        
         <div class="asset-container"></div>  
         <div class="form-container"></div>
@@ -170,7 +173,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.1.135/jspdf.min.js"></script>
-        <script src="{% static 'portfolio/read.js' %}" type="application/javascript"></script>
+        
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -181,5 +184,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 
+    <script src="{% static 'portfolio/read.js' %}" type="application/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
+        <script src="d3pie.min.js"></script>
+        <script src="{% static 'analysis/pie.js' %}" type="application/javascript"></script>
+
+
 </body>
-</html>

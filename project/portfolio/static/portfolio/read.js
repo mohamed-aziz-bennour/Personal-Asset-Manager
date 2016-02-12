@@ -147,20 +147,31 @@ $(document).ready(function(){
 
     });
 
-    var doc = new jsPDF();
-    var specialElementHandlers = {
-        '.asset-container': function (element, renderer) {
-            return true;
-        }
-    };
+    // var doc = new jsPDF();
+    // var specialElementHandlers = {
+    //     '.asset-container': function (element, renderer) {
+    //         return true;
+    //     }
+    // };
 
-    $('#cmd').click(function () {
-        doc.fromHTML($('.asset-container').html(), 15, 15, {
-            'width': 170,
-                'elementHandlers': specialElementHandlers
-        });
-        doc.save('sample-file.pdf');
-        console.log(doc);
-    });
+    // $('#cmd').click(function () {
+    //     doc.fromHTML($('.asset-container').html(), 15, 15, {
+    //         'width': 170,
+    //             'elementHandlers': specialElementHandlers
+    //     });
+    //     doc.save('sample-file.pdf');
+    //     console.log(doc);
+    // });
+
+
+    $('body').on('click','.view_dash_analysis', function(event){
+        event.preventDefault();
+        $('.tab-content').load("/analysis/beta_analysis/"+$(this).data("portfolio_id"));
+    })
+    $('body').on('click','.view_dash_compare', function(event){
+        event.preventDefault();
+        $('.tab-content').load("/analysis/compare/"+$(this).data("portfolio_id"));
+    })
+    
 
 });
