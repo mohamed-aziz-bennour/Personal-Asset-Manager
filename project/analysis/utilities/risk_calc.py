@@ -1,5 +1,5 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 from pandas_datareader import data
 from datetime import date
 from portfolio.models import Portfolio, Asset
@@ -12,50 +12,47 @@ class RiskAnalysis:
         self.start_date = None
         self.end_date = None
         self.period = None
+        self.symbol = ''
         self.stock_returns = None
         self.sp_returns = None
         self.beta = None
         self.alpha = None
     
     def run_analysis(self, symbol):
-        self.start_date = date(2013,12,31)
+        self.start_date = date(2014,12,31)
         self.end_date = date(2015,12,31)
         self.period = 12
-        self.stock_returns = self.calculate_stock_returns(symbol)
-
-        self.sp_returns = self.calculate_sp_returns()
+        self.symbol = symbol
+        self.calculate_returns()
+        # self.stock_returns = self.calculate_stock_returns(symbol)
+        # self.sp_returns = self.calculate_sp_returns()
+        # return {'sp':self.sp_returns,'stock':self.stock_returns}
         self.beta = self.calculate_beta()
         self.alpha = self.calculate_alpha()
         return self.risk_report()
 
-    def get_data(self, symbol):
-        stock = data.DataReader(symbol,'yahoo',self.start_date, self.end_date)
-        return stock
+    def get_data_stock(self):
+        self.stock_returns = data.DataReader(self.symbol,'yahoo',self.start_date, self.end_date)
 
-    def adjust_date_range(self, stock):
-        self.start_date = stock.index.min().date()  
-        self.end_date = stock.index.max().date()
+    def get_data_sp(self):
+        self.sp_returns = data.DataReader('^GSPC','yahoo',self.start_date, self.end_date)
 
-    def get_sp_data(self):
-        sp = data.DataReader('^GSPC','yahoo',self.start_date, self.end_date)
-        return sp
+    def calculate_returns(self):
+        self.get_data_stock()
+        self.get_data_sp()
+        new_index = self.sp_returns.index.intersection(self.stock_returns.index)
+        self.stock_returns = pd.DataFrame(data={'stock_adj_close':self.stock_returns['Adj Close']},index=new_index)
+        self.sp_returns = pd.DataFrame(data={'sp_adj_close':self.sp_returns['Adj Close']}, index=new_index)
+        self.calculate_stock_returns()
+        self.calculate_sp_returns()
 
-
-    def calculate_stock_returns(self, symbol):
-        stock = self.get_data(symbol)
-        self.adjust_date_range(stock)
-
-        data = pd.DataFrame({'stock_adj_close':stock['Adj Close']}, index=stock.index)
-        data[['stock_returns']] = data[['stock_adj_close']]/data[['stock_adj_close']].shift(1)-1 
-        stock_return = data.dropna()
-        return stock_return
+    def calculate_stock_returns(self):
+        self.stock_returns[['stock_returns']] = self.stock_returns[['stock_adj_close']]/self.stock_returns[['stock_adj_close']].shift(1)-1 
+        self.stock_return = self.stock_returns.dropna()
     
     def calculate_sp_returns(self):
-        sp = self.get_sp_data()
-        data = pd.DataFrame({'sp_adj_close':sp['Adj Close']}, index=sp.index)
-        data[['sp_returns']] = data[['sp_adj_close']]/data[['sp_adj_close']].shift(1)-1 
-        sp_return = data.dropna()
-        return sp_return
+        self.sp_returns[['sp_returns']] = self.sp_returns[['sp_adj_close']]/self.sp_returns[['sp_adj_close']].shift(1)-1 
+        self.sp_return = self.sp_returns.dropna()
 
 
     def compute_covariance(self):
