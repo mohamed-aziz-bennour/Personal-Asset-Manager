@@ -63,9 +63,13 @@ $(document).ready(function(){
             $('.securities-container').empty();
             var items = [];
             var res = $("#choice option:selected").val().split(" ");
+            items.push('<br><div class="col-sm-6">');
+            items.push('<table class="table" >');
             $.each(res, function(i, item) {
-                items.push('<li>' + item + '</li>');
+                items.push('<tr><td>' + item + '</tr><tr>');
                         });  // close each()
+            items.push('</table>');
+            items.push('</div>');
             $('.securities-container').append( items.join('') );
 
         }); 
@@ -107,7 +111,8 @@ $(document).ready(function(){
                 $.get(path, function(data){
                     var template = $('#stock-tmp').html();
                     var rendered = Mustache.render(template,data);
-                    $target.find('div.asset-info').html(rendered);
+                    $('div.asset-info').html(rendered);
+                    // $target.find('div.asset-info').html(rendered);
                    
                 });
             } else if ( type_asset==='bond'){
@@ -115,7 +120,7 @@ $(document).ready(function(){
                 $.get(path, function(data){
                     var template = $('#bond-tmp').html();
                     var rendered = Mustache.render(template,data);
-                    $target.find('div.asset-info').html(rendered);
+                    $('div.asset-info').html(rendered);
 
 
 
@@ -126,7 +131,7 @@ $(document).ready(function(){
                 $.get(path, function(data){
                     var template = $('#etf-tmp').html();
                     var rendered = Mustache.render(template,data);
-                    $target.find('div.asset-info').html(rendered);
+                    $('div.asset-info').html(rendered);
                     
                 });
 
