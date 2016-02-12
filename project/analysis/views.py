@@ -10,6 +10,8 @@ from analysis.utilities.risk_calc import RiskAnalysis,  Analysis_portfolio, Mode
 from portfolio.models import Portfolio, Asset
 from django.contrib.contenttypes.models import ContentType
 from .reporting_policy import report
+from django.contrib.auth.models import User
+
 
 
 class ClientCreateView(View):
@@ -56,7 +58,7 @@ class RiskView(View):
 
     def get(self, request):
         form = self.form_class()
-        self.context = self.get_context(form, request.GET.get('next'))
+        self.context = self.get_context(form, request.GET.get('next',''))
         return render(request, self.template_name, self.context)
 
     def post(self, request):
@@ -130,6 +132,9 @@ class BetaAnalysisView(View):
 
 class ReportInvestmentPolicy(View):
     def get(self,request):
+
+        if not hasattr(request.user,'analysis'):
+            return redirect('/analysis/analysis?next=/analysis/report_policy')
         return report(request)
         # Create the HttpResponse object with the appropriate PDF headers.
         
@@ -154,6 +159,34 @@ class Compare_with_model(View):
         context = dict(owen = context1, model = context2)
         print(context)
         return render(request, self.template_name, context) 
+
+class View_model_portfolio(View):
+    template_name = "read.html"
+
+
+    def get(self,request):
+        
+        if not hasattr(request.user,'risk'):
+            return redirect('/analysis/risk?next=/analysis/compare/{}'.format(id))
+        model = ModelPortfolio()
+        # user = User.objects.get(id= request.user)
+        model_id = model.recommended_portfolio(request,request.user)
+        portfolio = Portfolio.objects.get(id=model_id)
+        # assets = Asset.objects.filter(portfolio=portfolio)
+        assets= Asset.objects.raw('''SELECT *, cost_basis * quantity as value 
+            FROM portfolio_asset
+            WHERE portfolio_asset.portfolio_id = %s ''',(id,))
+        # print(assets)
+        portfolio_value = 0 
+        for asset in assets:
+            portfolio_value += asset.value
+        
+        assets = [ asset.to_json(asset.value,portfolio_value)for asset in assets ]
+        for asset in assets:
+            asset_value = round(asset_value,2)
+
+        # print(assets)
+        return JsonResponse({'asset':assets,'portfolio_value':portfolio_value})
 
 
 

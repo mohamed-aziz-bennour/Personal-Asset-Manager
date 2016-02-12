@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^beta_analysis/(?P<id>[A-Za-z0-9-]+)$', views.BetaAnalysisView.as_view(), name="beta_analysis"),
 	url(r'^report_policy$', views.ReportInvestmentPolicy.as_view(), name="report_policy"),
 	url(r'^compare/(?P<id>[A-Za-z0-9-]+)$', views.Compare_with_model.as_view(), name="compare"),
+	url(r'^model_portfolio$', views.View_model_portfolio.as_view(), name="model_portfolio"),
 
 
 
