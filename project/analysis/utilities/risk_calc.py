@@ -165,7 +165,7 @@ class Analysis_portfolio():
                     }
 
 
-         
+        print(totals)
         # return JsonResponse({'response':assets,'total':totals,'portfolio':portfolio_object.to_json()})
         return dict(response = assets ,total = totals ,portfolio = portfolio_object.to_json())
 
