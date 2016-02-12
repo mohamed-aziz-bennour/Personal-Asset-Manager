@@ -133,8 +133,7 @@ class BetaAnalysisView(View):
 class ReportInvestmentPolicy(View):
     def get(self,request):
 
-        if not hasattr(request.user,'analysis'):
-            return redirect('/analysis/analysis?next=/analysis/report_policy')
+        
         return report(request)
         # Create the HttpResponse object with the appropriate PDF headers.
         
