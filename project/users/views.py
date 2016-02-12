@@ -180,7 +180,7 @@ class UpdateUser(LoginRequiredMixin, View):
 
     def get_context(self, form):
         return {
-            "form": form,
+            "user_form": form,
             "action": "users:update",
             "method": "POST",
             "submit_text": "Update" 
@@ -219,7 +219,7 @@ class ChangePassword(LoginRequiredMixin, View):
 
     def get_context(self, form):
         return {
-            "form": form,
+            "user_form": form,
             "action": "users:passwordChange",
             "method": "POST",
             "submit_text": "Update" 
@@ -259,7 +259,7 @@ class ChangePhone(LoginRequiredMixin, View):
 
     def get_context(self, form):
         return {
-            "form": form,
+            "user_form": form,
             "action": "users:ChangePhone",
             "method": "POST",
             "submit_text": "change" 

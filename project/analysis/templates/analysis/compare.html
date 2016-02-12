@@ -5,9 +5,7 @@
     <title>Analysis on portfolio</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
 </head>
 <body>
 	<h1>Analyse on portfolio: {{model.portfolio.portfolio_name}} </h1>
@@ -62,10 +60,7 @@
 
 
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
-        <script src="d3pie.min.js"></script>
-        <script src="{% static 'analysis/compare.js' %}" type="application/javascript"></script>
+       
   					 		
                    
   	
@@ -121,8 +116,13 @@
         <input id="owen_etf_value" value="{{owen.total.etf_value}}" hidden>
   					 		
                   <center ><div id="chart2"></div></center>
-
-
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
+        <script src="d3pie.min.js"></script>
+        <script src="{% static 'analysis/compare.js' %}" type="application/javascript"></script>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 </body>
 </html>
