@@ -132,7 +132,6 @@ class LoginUser(View):
                 self.success_url = request.session["next"]
                 del request.session["next"]
             request.session.set_expiry(10000000)
-            print(dir(request))
             # dict_profile = {'username': data.get('username'),
             #     'first_name':data.get('first_name'),
             #     'last_name' : data.get('last_name'),
